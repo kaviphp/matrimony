@@ -8,7 +8,7 @@ use App\Models\SupportCategory;
 use App\Models\SupportTicketReply;
 use App\Models\SystemConfiguration;
 use App\Models\Staff;
-use App\User;
+use App\Models\User;
 use Auth;
 use Gate;
 

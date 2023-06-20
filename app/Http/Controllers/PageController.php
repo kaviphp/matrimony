@@ -23,8 +23,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
+        // CoreComponentRepository::instantiateShopRepository();
+        // CoreComponentRepository::initializeCache();
         $pages = Page::paginate(10);
         return view('admin.website_settings.pages.index', compact('pages'));
     }
