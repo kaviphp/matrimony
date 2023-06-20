@@ -23,13 +23,13 @@ class SettingController extends Controller
         $this->middleware(['permission:system_update'])->only('system_update');
         $this->middleware(['permission:server_status'])->only('system_server');
         $this->middleware(['permission:firebase_push_notification'])->only('fcm_settings');
-      
+
     }
 
     public function general_settings()
     {
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
+        // CoreComponentRepository::instantiateShopRepository();
+        // CoreComponentRepository::initializeCache();
         return view('admin.settings.general_settings');
     }
 
@@ -40,8 +40,8 @@ class SettingController extends Controller
 
     public function payment_method_settings()
     {
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
+        // CoreComponentRepository::instantiateShopRepository();
+        // CoreComponentRepository::initializeCache();
         return view('admin.settings.payment_method_settings');
     }
 
@@ -252,7 +252,7 @@ class SettingController extends Controller
      }
 
      public function overWriteEnvFile($type, $val)
-     {  
+     {
         if(env('DEMO_MODE') != 'On'){
             $path = base_path('.env');
             if (file_exists($path)) {
@@ -292,7 +292,7 @@ class SettingController extends Controller
 
             $settings->value = $request->value;
             $settings->save();
-            
+
             Artisan::call('cache:clear');
 
             return '1';
@@ -338,7 +338,7 @@ class SettingController extends Controller
     public function fcm_settings(){
         return view('admin.settings.google_configurations.fcm');
     }
-    
+
     public function fcm_settings_update(Request $request){
         foreach ($request->types as $key => $type) {
             $this->overWriteEnvFile($type, $request[$type]);
@@ -359,7 +359,7 @@ class SettingController extends Controller
             $settings->value = 1;
             $settings->save();
         }
-        
+
         Artisan::call('cache:clear');
 
         flash(translate("Settings updated successfully"))->success();

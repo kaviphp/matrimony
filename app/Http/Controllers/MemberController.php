@@ -80,8 +80,8 @@ class MemberController extends Controller
      */
     public function index(Request $request, $id)
     {
-        CoreComponentRepository::instantiateShopRepository();
-        CoreComponentRepository::initializeCache();
+        // CoreComponentRepository::instantiateShopRepository();
+        // CoreComponentRepository::initializeCache();
 
         $sort_search  = null;
         $members       = User::latest()->where('user_type','member')->where('membership',$id);
@@ -290,7 +290,7 @@ class MemberController extends Controller
         $user               = User::findOrFail($request->id);
         $user->first_name   = $request->first_name;
         $user->last_name    = $request->last_name;
-        
+
         if(get_setting('profile_picture_approval_by_admin') && $request->photo != $user->photo && auth()->user()->user_type == 'member'){
             $user->photo_approved = 0;
         }
