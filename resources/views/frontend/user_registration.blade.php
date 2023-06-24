@@ -95,6 +95,24 @@
 							        </div>
 							    </div>
 							@else
+                                <div class="row mb-2">
+                                    <div class="col-12 d-flex justify-content-between align-items-start">
+                                        <label class="form-label" for="email">
+                                            {{ translate('Phone') }}
+                                        </label>
+                                    </div>
+                                    <div class="col-12 form-group phone-form-group mb-1">
+                                        <input type="tel" id="phone-code"
+                                            class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
+                                            placeholder="" name="phone"
+                                            required autocomplete="off">
+                                        @error('phone')
+                                            <span class="invalid-feedback"
+                                                role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <input type="hidden" name="country_code" value="">
+                                </div>
 								<div class="row">
 									<div class="col-lg-12">
 									  <div class="form-group mb-3">
