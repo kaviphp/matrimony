@@ -259,49 +259,49 @@ $lang = \App\Models\Language::where('code', $locale)->first();
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-        const messaging = firebase.messaging();
+        // const messaging = firebase.messaging();
 
-        function initFirebaseMessagingRegistration() {
-            messaging.requestPermission()
-            .then(function() {
-                return messaging.getToken()
-            }).then(function(token) {
-                
-                $.ajax({
-                    url: '{{ route('fcmToken') }}',
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        fcm_token: token
-                    },
-                    dataType: 'JSON',
-                    success: function (response) {
-                        
-                    },
-                    error: function (err) {
-                        console.log(" Can't do because: " + err);
-                    },
-                });
+        // function initFirebaseMessagingRegistration() {
+        //     messaging.requestPermission()
+        //     .then(function() {
+        //         return messaging.getToken()
+        //     }).then(function(token) {
 
-            }).catch(function(err) {
-                console.log(`Token Error :: ${err}`);
-            });
-        }
+        //         $.ajax({
+        //             url: '{{ route('fcmToken') }}',
+        //             type: 'POST',
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             data: {
+        //                 fcm_token: token
+        //             },
+        //             dataType: 'JSON',
+        //             success: function (response) {
 
-        initFirebaseMessagingRegistration();        
+        //             },
+        //             error: function (err) {
+        //                 console.log(" Can't do because: " + err);
+        //             },
+        //         });
 
-        messaging.onMessage(function({
-            data: {
-                body,
-                title
-            }
-        }) {
-            new Notification(title, {
-                body
-            });
-        });
+        //     }).catch(function(err) {
+        //         console.log(`Token Error :: ${err}`);
+        //     });
+        // }
+
+        // initFirebaseMessagingRegistration();
+
+        // messaging.onMessage(function({
+        //     data: {
+        //         body,
+        //         title
+        //     }
+        // }) {
+        //     new Notification(title, {
+        //         body
+        //     });
+        // });
     </script>
     {{-- End of fcm --}}
 

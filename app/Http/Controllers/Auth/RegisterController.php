@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\OTPVerificationController;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Member;
@@ -52,12 +51,10 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Show the registration form.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-
     public function showRegistrationForm()
     {
         return view('frontend.user_registration');
@@ -69,6 +66,12 @@ class RegisterController extends Controller
             'first_name'  => ['required', 'string', 'max:255'],
             'last_name'   => ['required', 'string', 'max:255'],
             'password'    => ['required', 'string', 'min:8', 'confirmed'],
+            'phone'       => ['required', 'regex:/^[6-9]\d{9}$/'],
+            'email'       => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        ], [
+            'password.confirmed' => 'The password confirmation does not match.',
+            'phone.regex' => 'Please enter a valid phone number.',
+            'email.unique' => 'This email is already registered.',
         ]);
     }
 
@@ -81,30 +84,17 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $approval = get_setting('member_approval_by_admin') == 1 ? 0 : 1;
-        if (filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $user = User::create([
-                'first_name'  => $data['first_name'],
-                'last_name'   => $data['last_name'],
-                'membership'  => 1,
-                'email'       => $data['email'],
-                'password'    => Hash::make($data['password']),
-                'code'        => unique_code(),
-                'approved'    => $approval,
-            ]);
-        } else {
-            if (addon_activation('otp_system')) {
-                $user = User::create([
-                    'first_name'  => $data['first_name'],
-                    'last_name'   => $data['last_name'],
-                    'membership'  => 1,
-                    'phone'       => '+' . $data['country_code'] . $data['phone'],
-                    'password'    => Hash::make($data['password']),
-                    'code'        => unique_code(),
-                    'approved'    => $approval,
-                    'verification_code' => rand(100000, 999999)
-                ]);
-            }
-        }
+        $user = User::create([
+            'first_name'  => $data['first_name'],
+            'last_name'   => $data['last_name'],
+            'membership'  => 1,
+            'email'       => $data['email'],
+            'phone'       => '+' . $data['country_code'] . $data['phone'],
+            'password'    => Hash::make($data['password']),
+            'code'        => unique_code(),
+            'approved'    => $approval,
+            'verification_code' => rand(100000, 999999)
+        ]);
         if (addon_activation('referral_system') && $data['referral_code'] != null) {
             $reffered_user = User::where('code', '!=', null)->where('code', $data['referral_code'])->first();
             if ($reffered_user != null) {
@@ -134,25 +124,19 @@ class RegisterController extends Controller
 
 
         // Account opening Email to member
-        if ($data['email'] != null  && env('MAIL_USERNAME') != null) {
-            $account_oppening_email = EmailTemplate::where('identifier', 'account_oppening_email')->first();
-            if ($account_oppening_email->status == 1) {
-                EmailUtility::account_oppening_email($user->id, $data['password']);
-            }
-        }
+        // if ($data['email'] != null  && env('MAIL_USERNAME') != null) {
+        //     $account_oppening_email = EmailTemplate::where('identifier', 'account_oppening_email')->first();
+        //     if ($account_oppening_email->status == 1) {
+        //         EmailUtility::account_oppening_email($user->id, $data['password']);
+        //     }
+        // }
 
         return $user;
     }
 
     public function register(Request $request)
     {
-
-        if (filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
-            if (User::where('email', $request->email)->first() != null) {
-                flash(translate('Email or Phone already exists.'));
-                return back();
-            }
-        } elseif (User::where('phone', '+' . $request->country_code . $request->phone)->first() != null) {
+        if (User::where('phone', '+' . $request->country_code . $request->phone)->first() != null) {
             flash(translate('Phone already exists.'));
             return back();
         }
@@ -182,8 +166,8 @@ class RegisterController extends Controller
             }
             // end of fcm
             $users = User::where('user_type', 'staff')->get();
-            foreach ($users as $user) {
-                Notification::send($user, new DbStoreNotification($notify_type, $id, $notify_by, $info_id, $message, $route));
+            foreach ($users as $staff) {
+                Notification::send($staff, new DbStoreNotification($notify_type, $id, $notify_by, $info_id, $message, $route));
             }
         } catch (\Exception $e) {
             // dd($e);
@@ -195,19 +179,8 @@ class RegisterController extends Controller
             }
         }
 
-        if (get_setting('email_verification') != 1) {
-            if ($user->email != null || $user->phone != null) {
-                $user->email_verified_at = date('Y-m-d H:m:s');
-                $user->save();
-                flash(translate('Registration successfull.'))->success();
-            }
-        } else {
-            event(new Registered($user));
-            flash(translate('Registration successfull. Please verify your email.'))->success();
-        }
-
         if ($user->phone != null) {
-            // flash(translate('Registration successfull. Please verify your phone number.'))->success();
+            flash(translate('Registration successfull. Please verify your phone number.'))->success();
         }
 
         return $this->registered($request, $user)
@@ -218,7 +191,15 @@ class RegisterController extends Controller
     {
         //?? where should redirect user after registration
         if (get_setting('member_approval_by_admin') == 1) {
-            return redirect()->route('login');
+            $otp = rand(100000, 999999);
+            $user->verification_code = $otp;
+            $user->save();
+
+            $message = "Your " . get_setting('site_name') . " OTP is $otp";
+            $to = $user->phone;
+            sendSms($message, $to);
+
+            return redirect()->route('user.verify');
         } else {
             return redirect()->route('dashboard');
         }

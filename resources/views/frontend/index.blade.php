@@ -58,7 +58,7 @@
                                                         for="name">{{ translate('First Name') }}</label>
                                                     <input type="text"
                                                         class="form-control @error('first_name') is-invalid @enderror"
-                                                        name="first_name" id="first_name"
+                                                        name="first_name" id="first_name" value="{{ old('first_name') }}"
                                                         placeholder="{{ translate('First Name') }}" required>
                                                     @error('first_name')
                                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
@@ -71,7 +71,7 @@
                                                         for="name">{{ translate('Last Name') }}</label>
                                                     <input type="text"
                                                         class="form-control @error('last_name') is-invalid @enderror"
-                                                        name="last_name" id="last_name"
+                                                        name="last_name" id="last_name" value="{{ old('last_name') }}"
                                                         placeholder="{{ translate('Last Name') }}" required>
                                                     @error('last_name')
                                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
@@ -101,7 +101,7 @@
                                                         for="name">{{ translate('Date Of Birth') }}</label>
                                                     <input type="text"
                                                         class="form-control aiz-date-range @error('date_of_birth') is-invalid @enderror"
-                                                        name="date_of_birth" id="date_of_birth"
+                                                        name="date_of_birth" id="date_of_birth" value="{{ old('date_of_birth') }}"
                                                         placeholder="{{ translate('Date Of Birth') }}" data-single="true"
                                                         data-show-dropdown="true" data-max-date="{{ get_max_date() }}"
                                                         autocomplete="off" required>
@@ -143,6 +143,24 @@
                                                 </div>
                                             </div>
                                         @else
+                                            <div class="row mb-2">
+                                                <div class="col-12 d-flex justify-content-between align-items-start">
+                                                    <label class="form-label" for="email">
+                                                        {{ translate('Phone') }}
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 form-group phone-form-group mb-1">
+                                                    <input type="tel" id="phone-code"
+                                                        class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
+                                                        placeholder="" name="phone"
+                                                        required autocomplete="off">
+                                                    @error('phone')
+                                                        <span class="invalid-feedback"
+                                                            role="alert">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <input type="hidden" name="country_code" value="">
+                                            </div>
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group mb-3">
@@ -150,8 +168,8 @@
                                                             for="email">{{ translate('Email address') }}</label>
                                                         <input type="email"
                                                             class="form-control @error('email') is-invalid @enderror"
-                                                            name="email" id="signinSrEmail"
-                                                            placeholder="{{ translate('Email Address') }}">
+                                                            name="email" id="signinSrEmail" value="{{ old('email') }}"
+                                                            required placeholder="{{ translate('Email Address') }}">
                                                         @error('email')
                                                             <span class="invalid-feedback"
                                                                 role="alert">{{ $message }}</span>

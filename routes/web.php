@@ -45,13 +45,15 @@ Route::get('/migrate/database', 'AizUploadController@migrate_database');
 
 Auth::routes(['verify' => true]);
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+// Route::get('/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 Route::get('/verification-confirmation/{code}', 'Auth\VerificationController@verification_confirmation')->name('email.verification.confirmation');
 Route::get('/email_change/callback', 'HomeController@email_change_callback')->name('email_change.callback');
 Route::post('/password/reset/email/submit', 'HomeController@reset_password_with_code')->name('password.update');
 
 
 Route::get('/users/login', 'HomeController@login')->name('user.login');
+Route::get('/users/verify', 'Auth\VerificationController@show')->name('user.verify');
+Route::post('/users/resend/otp', 'Auth\VerificationController@resend')->name('user.resend.otp');
 Route::get('/social-login/redirect/{provider}', 'Auth\LoginController@redirectToProvider')->name('social.login');
 Route::get('/social-login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social.callback');
 
@@ -123,7 +125,7 @@ Route::group(['middleware' => ['member', 'verified']], function () {
     Route::post('/member/add-to-ignore-list', 'IgnoredUserController@add_to_ignore_list')->name('member.add_to_ignore_list');
     Route::post('/member/remove-from-ignored-list', 'IgnoredUserController@remove_from_ignored_list')->name('member.remove_from_ignored_list');
 
-    // Profile_picture view request 
+    // Profile_picture view request
     Route::resource('/profile-picture-view-request', 'ViewProfilePictureController');
     Route::post('/profile-picture-view-request/accept', 'ViewProfilePictureController@accept_request')->name('profile_picture_view_request_accept');
     Route::post('/profile-picture-view-request/reject', 'ViewProfilePictureController@reject_request')->name('profile_picture_view_request_reject');

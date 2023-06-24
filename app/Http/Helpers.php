@@ -15,6 +15,40 @@ use App\Utility\MimoUtility;
 use Twilio\Rest\Client;
 use Carbon\Carbon;
 
+
+if (!function_exists('sendSms')) {
+    function sendSms($message, $to) {
+        $options = http_build_query([
+            'from' => get_setting('site_name'),
+            'text' => $message,
+            'to' => $to,
+            'api_key' => env('NEXMO_API_KEY'),
+            'api_secret' => env('NEXMO_API_SECRET')
+        ]);
+
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => 'https://rest.nexmo.com/sms/json',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $options,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/x-www-form-urlencoded'
+            ],
+        ]);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
+}
+
+
+
 if (!function_exists('site_url')) {
     function site_url()
     {
@@ -690,7 +724,7 @@ if (!function_exists('upload_api_file')) {
     function upload_api_file($image)
     {
         $arr = explode('.', $image->getClientOriginalName());
-        
+
         $upload = new Upload();
         $upload->file_original_name = $arr[0];
         $upload->file_name = $image->store('uploads/all');
