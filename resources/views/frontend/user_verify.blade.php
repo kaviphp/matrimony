@@ -11,7 +11,7 @@
                             <h1 class="h3 text-primary mb-0">Verify Your Account.</h1>
                         </div>
 
-                        <form class="" method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('email.verification.confirmation') }}">
                             @csrf
                             <div class="form-group">
                                 <label class="form-label" for="email">
@@ -22,10 +22,15 @@
                                 @else
                                     <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" placeholder="{{  translate('Email') }}" name="email" id="email">
                                 @endif
+                                @if ($errors->has('phone'))
+                                    <p class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </p>
+                                @endif
                                 @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
+                                    <p class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                    </p>
                                 @endif
                                 @if (!addon_activation('otp_system'))
                                     <span class="opacity-60">{{ translate('Use country code before number') }}</span>

@@ -51,9 +51,18 @@ class VerificationController extends Controller
 
     public function resend(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $user = User::where('phone', $request->phone)
             ->orWhere('email', $request->phone)
             ->first();
+
         if (!$user) {
             flash(translate('Sorry, account not found. Please try again'))->error();
             return back();
@@ -75,12 +84,13 @@ class VerificationController extends Controller
     }
 
     public function verification_confirmation(Request $request){
-        $user = User::where('verification_code', $request->code)
+        $user = User::where('verification_code', $request->otp)
             ->where(function ($query) use ($request) {
                 $query->where('email', $request->email)
                     ->orWhere('phone', $request->email);
             })
             ->first();
+        
         if($user != null){
             $user->email_verified_at = Carbon::now();
             $user->save();
