@@ -353,6 +353,53 @@
     @endif
 
 
+    <!-- Featured Profile Section -->
+    <section class="py-9 bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-xl-8 col-xxl-6 mx-auto">
+                    <div class="text-center section-title mb-5">
+                        <h2 class="fw-600 mb-3 text-dark">Featured Profiles</h2>
+                        <p class="fw-400 fs-16 opacity-60">
+                            Discover exceptional Featured Profiles - a curated collection of elite singles. Uncover true compatibility and embark on a journey of love with our handpicked selection. Find your perfect match today!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="5" data-xl-items="4" data-lg-items="4"
+                data-md-items="3" data-sm-items="2" data-xs-items="1" data-dots='true' data-infinite='true'>
+                @foreach ($featuredProfiles as $key => $member)
+                    <div class="carousel-box">
+                        @include('frontend.inc.member_box_1',['member'=>$member])
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner section 1 -->
+    @if (get_setting('show_home_banner1_section') == 'on' && get_setting('home_banner1_images') != null)
+        <section class="bg-white">
+            <div class="container">
+                <div class="row gutters-10">
+                    @php $banner_1_imags = json_decode(get_setting('home_banner1_images')); @endphp
+                    @foreach ($banner_1_imags as $key => $value)
+                        <div class="col-xl col-md-6">
+                            <div class="mb-3">
+                                <a href="{{ json_decode(get_setting('home_banner1_links'), true)[$key] }}"
+                                    class="d-block text-reset">
+                                    <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
+                                        data-src="{{ uploaded_asset($banner_1_imags[$key]) }}"
+                                        alt="{{ env('APP_NAME') }}" class="img-fluid lazyload w-100">
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
 
     <!-- premium member Section -->
     @if (get_setting('show_premium_member_section') == 'on')
@@ -378,29 +425,7 @@
         </section>
     @endif
 
-
-    <!-- Banner section 1 -->
-    @if (get_setting('show_home_banner1_section') == 'on' && get_setting('home_banner1_images') != null)
-        <section class="bg-white">
-            <div class="container">
-                <div class="row gutters-10">
-                    @php $banner_1_imags = json_decode(get_setting('home_banner1_images')); @endphp
-                    @foreach ($banner_1_imags as $key => $value)
-                        <div class="col-xl col-md-6">
-                            <div class="mb-3">
-                                <a href="{{ json_decode(get_setting('home_banner1_links'), true)[$key] }}"
-                                    class="d-block text-reset">
-                                    <img src="{{ static_asset('assets/img/placeholder-rect.jpg') }}"
-                                        data-src="{{ uploaded_asset($banner_1_imags[$key]) }}"
-                                        alt="{{ env('APP_NAME') }}" class="img-fluid lazyload w-100">
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
+    <x-ads :ads="$ads" />
 
     <!-- How It Works Section -->
     @if (get_setting('show_how_it_works_section') == 'on' && get_setting('how_it_works_steps_titles') != null)

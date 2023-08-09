@@ -19,7 +19,10 @@
                 <th class="text-right">{{translate('Options')}}</th>
             </tr>
 
-            @php $educations = \App\Models\Education::where('user_id',$member->id)->get(); @endphp
+            @php $educations = \App\Models\Education::where([
+                'user_id'=>$member->id,
+                'education_type' => 0
+            ])->get(); @endphp
             @foreach ($educations as $key => $education)
             <tr>
                 <td>{{ $education->degree }}</td>

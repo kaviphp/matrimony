@@ -41,9 +41,11 @@
                 </div>
             @endforeach
         </div>
-        <div class="aiz-pagination aiz-pagination-center mt-4">
+        <div class="aiz-pagination aiz-pagination-center mt-4 mb-4">
             {{ $happy_stories->appends(request()->input())->links() }}
         </div>
+
+        <x-ads :ads="$ads" />
     </div>
 </section>
 @endsection

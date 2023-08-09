@@ -1,4 +1,5 @@
 <?php
+use App\Models\Education;
 
 /*
   |--------------------------------------------------------------------------
@@ -49,6 +50,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/member/unapproved-profile-pictures', 'MemberController@unapproved_profile_pictures')->name('unapproved_profile_pictures');
     Route::post('/member/approve_profile_image', 'MemberController@approve_profile_image')->name('approve_profile_image');
 
+    // Featured Profiles
+    Route::post('/featured-profile/store/{user}', 'FeaturedProfileController@store')->name('featured_profile.store');
+    Route::delete('/featured-profile/destroy/{user}', 'FeaturedProfileController@destroy')->name('featured_profile.destroy');
     // Bulk member
     Route::get('/member-bulk-add/index', 'MemberBulkAddController@index')->name('member_bulk_add.index');
     Route::get('/download/on-behalf', 'MemberBulkAddController@pdf_download_on_behalf')->name('pdf.on_behalf');
@@ -123,6 +127,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     // Family Value
     Route::resource('/family-values', 'FamilyValueController');
     Route::get('/family-values/destroy/{id}', 'FamilyValueController@destroy')->name('family-values.destroy');
+
+    // Islamic Education Details
+    Route::resource('/islamic-education', 'IslamicEducationController');
+    Route::get('/islamic-education/destroy/{id}', 'IslamicEducationController@destroy')->name('islamic-education.destroy');
 
     // On Behalf
     Route::resource('/on-behalf', 'OnBehalfController');
@@ -207,7 +215,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::resource('/uploaded-files', 'AizUploadController');
     Route::get('/uploaded-files/destroy/{id}', 'AizUploadController@destroy')->name('uploaded-files.destroy');
 
-    Route::get('/cache-cache', 'HomeController@clearCache')->name('cache.clear');
+    Route::get('/ads/delete/{advertisement}', 'AdvertisementController@delete')->name('ads.delete');
+    Route::resource('/ads', 'AdvertisementController');
+
+    Route::get('/cache-clear', 'HomeController@clearCache')->name('cache.clear');
 });
 
 ?>

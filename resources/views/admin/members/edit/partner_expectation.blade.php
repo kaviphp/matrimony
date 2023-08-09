@@ -47,7 +47,7 @@
                 <label for="partner_marital_status">{{translate('Marital Status')}}</label>
                 <select class="form-control aiz-selectpicker" name="partner_marital_status" data-live-search="true" required>
                     @foreach ($marital_statuses as $marital_status)
-                        <option value="{{$marital_status->id}}" @if($member->member->marital_status_id == $marital_status->id) selected @endif>{{$marital_status->name}}</option>
+                        <option value="{{$marital_status->id}}" @if($member->member?->marital_status_id == $marital_status->id) selected @endif>{{$marital_status->name}}</option>
                     @endforeach
                 </select>
                 @error('partner_marital_status')
@@ -63,9 +63,9 @@
                 @enderror
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row ">
             <div class="col-md-6">
-                <label for="partner_religion_id">{{translate('Religion')}}</label>
+                <label for="partner_religion_id">{{translate('Religiousness')}}</label>
                 <select class="form-control aiz-selectpicker" name="partner_religion_id" id="partner_religion_id" data-live-search="true" required>
                     <option value="">{{translate('Select One')}}</option>
                     @foreach ($religions as $religion)
@@ -75,24 +75,6 @@
                 @error('partner_religion_id')
                     <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
-            </div>
-            <div class="col-md-6">
-                <label for="partner_caste_id">{{translate('Caste')}}</label>
-                <select class="form-control aiz-selectpicker" name="partner_caste_id" id="partner_caste_id" data-live-search="true" required>
-
-                </select>
-                @error('partner_caste_id')
-                    <small class="form-text text-danger">{{ $message }}</small>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-6">
-                <label for="partner_sub_caste_id">{{translate('Sub Caste')}}</label>
-                <select class="form-control aiz-selectpicker" name="partner_sub_caste_id" id="partner_sub_caste_id" data-live-search="true">
-
-                </select>
             </div>
             <div class="col-md-6">
                 <label for="language_id">{{translate('Language')}}</label>
@@ -108,11 +90,19 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row d-none">
             <div class="col-md-6">
-                <label for="pertner_education">{{translate('Education')}}</label>
-                <input type="text" name="pertner_education" value="{{ !empty($member->partner_expectations->education) ? $member->partner_expectations->education : "" }}" class="form-control" placeholder="{{translate('Education')}}" required>
-                @error('pertner_education')
+                <label for="partner_sub_caste_id">{{translate('Sub Caste')}}</label>
+                <select class="form-control aiz-selectpicker" name="partner_sub_caste_id" id="partner_sub_caste_id" data-live-search="true">
+
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="partner_caste_id">{{translate('Caste')}}</label>
+                <select class="form-control aiz-selectpicker" name="partner_caste_id" id="partner_caste_id" data-live-search="true" required>
+
+                </select>
+                @error('partner_caste_id')
                     <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
             </div>
@@ -218,6 +208,16 @@
                 <label for="pertner_complexion">{{translate('Complexion')}}</label>
                 <input type="text" name="pertner_complexion" value="{{ !empty($member->partner_expectations->complexion) ? $member->partner_expectations->complexion : "" }}" class="form-control" placeholder="{{translate('Complexion')}}" required>
                 @error('pertner_complexion')
+                    <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="pertner_education">{{translate('Education')}}</label>
+                <input type="text" name="pertner_education" value="{{ !empty($member->partner_expectations->education) ? $member->partner_expectations->education : "" }}" class="form-control" placeholder="{{translate('Education')}}" required>
+                @error('pertner_education')
                     <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
             </div>

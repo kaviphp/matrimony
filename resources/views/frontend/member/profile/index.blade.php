@@ -71,6 +71,9 @@
     @endif
 
     <!-- Education -->
+    @include('frontend.member.profile.islamic.index')
+
+    <!-- Education -->
     @if(get_setting('member_education_section') == 'on')
       @include('frontend.member.profile.education.index')
     @endif
@@ -401,12 +404,26 @@
         get_states_by_country_for_partner();
     });
 
+    function islam_education_add_modal(id){
+       $.post('{{ route('islam_education.create') }}',{_token:'{{ @csrf_token() }}', id:id}, function(data){
+           $('.create_edit_modal_content').html(data);
+           $('.create_edit_modal').modal('show');
+       });
+    }
+
     //  education Add edit , status change
     function education_add_modal(id){
        $.post('{{ route('education.create') }}',{_token:'{{ @csrf_token() }}', id:id}, function(data){
            $('.create_edit_modal_content').html(data);
            $('.create_edit_modal').modal('show');
        });
+    }
+
+    function islam_education_edit_modal(id){
+        $.post('{{ route('islam_education.edit') }}',{_token:'{{ @csrf_token() }}', id:id}, function(data){
+            $('.create_edit_modal_content').html(data);
+            $('.create_edit_modal').modal('show');
+        });
     }
 
     function education_edit_modal(id){

@@ -46,7 +46,7 @@
                 <h5 class="mb-0 h6">{{translate('Introduction')}}</h5>
             </div>
             <div class="card-body">
-                <p>{{ $member->member->introduction }}</p>
+                <p>{{ $member->member?->introduction }}</p>
             </div>
         </div>
 
@@ -67,15 +67,15 @@
                 <tr>
                     <th>{{translate('Gender')}}</th>
                     <td>
-                        @if($member->member->gender == 1)
+                        @if($member->member?->gender == 1)
                             {{translate('Male')}}
-                        @elseif($member->member->gender == 2)
+                        @elseif($member->member?->gender == 2)
                             {{translate('Female')}}
                         @endif
                     </td>
 
                     <th>{{translate('Date Of Birth')}}</th>
-                    <td>{{ !empty($member->member->birthday) ? date('Y-m-d', strtotime($member->member->birthday)) : ''}}</td>
+                    <td>{{ !empty($member->member?->birthday) ? date('Y-m-d', strtotime($member->member?->birthday)) : ''}}</td>
                 </tr>
                 <tr>
                     <th>{{translate('Email')}}</th>
@@ -87,14 +87,14 @@
                 </tr>
                 <tr>
                     <th>{{translate('Marital Status')}}</th>
-                    <td>{{ !empty($member->member->marital_status->name) ? $member->member->marital_status->name : ""  }}</td>
+                    <td>{{ !empty($member->member?->marital_status->name) ? $member->member?->marital_status->name : ""  }}</td>
 
                     <th>{{translate('Number Of Children')}}</th>
-                    <td>{{ $member->member->children }}</td>
+                    <td>{{ $member->member?->children }}</td>
                 </tr>
                 <tr>
                     <th>{{translate('On Behalf')}}</th>
-                    <td>{{ !empty($member->member->on_behalves_id) ? $member->member->on_behalves->name : ''}}</td>
+                    <td>{{ !empty($member->member?->on_behalves_id) ? $member->member?->on_behalves->name : ''}}</td>
                 </tr>
                 </table>
             </div>
@@ -128,6 +128,45 @@
           </div>
         @endif
 
+        <!-- Islamic Education -->
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0 h6">{{translate('Islamic Education')}}</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>{{translate('Degree')}}</th>
+                        <th>{{translate('Institution')}}</th>
+                        <th>{{translate('Start')}}</th>
+                        <th>{{translate('End')}}</th>
+                        <th>{{translate('Status')}}</th>
+                    </tr>
+
+                    @php $educations = \App\Models\Education::where([
+                        'user_id'=>$member->id,
+                        'education_type' => 1
+                    ])->get(); @endphp
+                    @foreach ($educations as $key => $education)
+                    <tr>
+                        <td>{{ $education->degree }}</td>
+                        <td>{{ $education->institution }}</td>
+                        <td>{{ $education->start }}</td>
+                        <td>{{ $education->end }}</td>
+                        <td>
+                            @if($education->present == 1)
+                                <span class="badge badge-inline badge-success">{{translate('Active')}}</span>
+                            @else
+                                <span class="badge badge-inline badge-danger">{{translate('Deactive')}}</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+
+                </table>
+            </div>
+        </div>
+
         <!-- Education -->
         @if(get_setting('member_education_section') == 'on')
           <div class="card">
@@ -144,7 +183,10 @@
                           <th>{{translate('Status')}}</th>
                       </tr>
 
-                      @php $educations = \App\Models\Education::where('user_id',$member->id)->get(); @endphp
+                      @php $educations = \App\Models\Education::where([
+                        'user_id'=>$member->id,
+                        'education_type' => 0
+                    ])->get(); @endphp
                       @foreach ($educations as $key => $education)
                       <tr>
                           <td>{{ $education->degree }}</td>
@@ -261,15 +303,15 @@
                       <tr>
                           <th>{{ translate('Mother Tangue') }}</th>
                           <td>
-                              @if(!empty($member->member->mothere_tongue) && $member->member->mothereTongue != null)
-                                  {{ $member->member->mothereTongue->name }}
+                              @if(!empty($member->member?->mothere_tongue) && $member->member?->mothereTongue != null)
+                                  {{ $member->member?->mothereTongue->name }}
                               @endif
                           </td>
 
                           <th>{{translate('Known Languages')}}</th>
                           <td>
-                            @if(!empty($member->member->known_languages))
-                              @foreach (json_decode($member->member->known_languages) as $key => $value)
+                            @if(!empty($member->member?->known_languages))
+                              @foreach (json_decode($member->member?->known_languages) as $key => $value)
                                 @php $known_language = \App\Models\MemberLanguage::where('id',$value)->first(); @endphp
                                 @if($known_language != null)
                                     <span class="badge badge-inline badge-info">
@@ -411,15 +453,16 @@
                           <th>{{translate('Religion')}}</th>
                           <td>{{ !empty($member->spiritual_backgrounds->religion->name) ? $member->spiritual_backgrounds->religion->name : "" }}</td>
 
-                          <th>{{translate('Caste')}}</th>
-                          <td>{{ !empty($member->spiritual_backgrounds->caste->name) ? $member->spiritual_backgrounds->caste->name : "" }}</td>
+                          <th>{{translate('Ethnicity')}}</th>
+                          <td>{{ !empty($member->spiritual_backgrounds->ethnicity) ? $member->spiritual_backgrounds->ethnicity : "" }}</td>
                       </tr>
-                      <tr>
+                      <tr class="d-none">
+                        <th>{{translate('Caste')}}</th>
+                        <td>{{ !empty($member->spiritual_backgrounds->caste->name) ? $member->spiritual_backgrounds->caste->name : "" }}</td>
+
                           <th>{{translate('Sub Caste')}}</th>
                           <td>{{ !empty($member->spiritual_backgrounds->sub_caste->name) ? $member->spiritual_backgrounds->sub_caste->name : "" }}</td>
 
-                          <th>{{translate('Ethnicity')}}</th>
-                          <td>{{ !empty($member->spiritual_backgrounds->ethnicity) ? $member->spiritual_backgrounds->ethnicity : "" }}</td>
                       </tr>
                       <tr>
                           <th>{{translate('Personal Value')}}</th>
@@ -585,16 +628,16 @@
                           <th>{{translate('Religion')}}</th>
                           <td>{{ !empty($member->partner_expectations->religion->name) ? $member->partner_expectations->religion->name : "" }}</td>
 
-                          <th>{{translate('Caste')}}</th>
-                          <td>{{ !empty($member->partner_expectations->caste->name) ? $member->partner_expectations->caste->name : "" }}</td>
-                      </tr>
-
-                      <tr>
-                          <th>{{translate('Sub Caste')}}</th>
-                          <td>{{ !empty($member->partner_expectations->sub_caste->name) ? $member->partner_expectations->sub_caste->name : "" }}</td>
-
                           <th>{{translate('Language')}}</th>
                           <td>{{ !empty($member->partner_expectations->member_language) ? $member->partner_expectations->member_language->name : "" }}</td>
+                      </tr>
+
+                      <tr class="d-none">
+                        <th>{{translate('Caste')}}</th>
+                        <td>{{ !empty($member->partner_expectations->caste->name) ? $member->partner_expectations->caste->name : "" }}</td>
+
+                          <th>{{translate('Sub Caste')}}</th>
+                          <td>{{ !empty($member->partner_expectations->sub_caste->name) ? $member->partner_expectations->sub_caste->name : "" }}</td>
                       </tr>
 
                       <tr>

@@ -40,16 +40,27 @@
                                 $check = false;
                             }
                         }
+                        $show = false;
                     @endphp
-                    @if($check)
+                    @foreach ($permission_group as $permission)
+                        @can($permission->name)
+                            @php
+                                $show = true;
+                                break;
+                            @endphp
+                        @endcan
+                    @endforeach
+
+                    @if($check && $show)
                         <div class="bd-example">
                             <ul class="list-group">
                                 <li class="list-group-item bg-light" aria-current="true">
                                     {{ translate(Str::headline($permission_group[0]['parent'])) }}
                                 </li>
                                 <li class="list-group-item">
-                                    <div class="row">
+                                    <div class="row" data-group="{{ $key }}">
                                         @foreach ($permission_group as $key => $permission)
+                                            @can($permission->name)
                                             <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
                                                 <div class="p-2 border mt-1 mb-2">
                                                     <label class="control-label d-flex">{{ translate(Str::headline($permission->name)) }}</label>
@@ -59,13 +70,14 @@
                                                     </label>
                                                 </div>
                                             </div>
+                                            @endcan
                                         @endforeach
                                     </div>
                                 </li>
-                          </ul>
+                            </ul>
+                        </div>
+                        <br>
                     @endif
-                  </div>
-                  <br>
                 @endforeach
 
                 <div class="form-group mb-3 mt-3 text-right">

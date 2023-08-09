@@ -13,6 +13,7 @@ use App\Models\Caste;
 use App\Models\SubCaste;
 use App\Models\MemberLanguage;
 use App\Models\FamilyValue;
+use App\Models\IslamicEducation;
 use App\Models\MaritalStatus;
 use App\Models\OnBehalf;
 use App\Models\Wallet;
@@ -88,9 +89,10 @@ class MemberController extends Controller
 
         if ($request->has('search') && ($request->input('search')!='')){
             $sort_search  = $request->search;
-            $members  = $members->where('code',$sort_search)->orwhere('first_name', 'like', '%'.$sort_search.'%')->orWhere('last_name', 'like', '%'.$sort_search.'%');
+            $members  = $members->where('code',$sort_search)
+                ->orwhere('first_name', 'like', '%'.$sort_search.'%')
+                ->orWhere('last_name', 'like', '%'.$sort_search.'%');
         }
-
         $members = $members->paginate(10);
         return view('admin.members.index', compact('members','sort_search'));
     }
@@ -217,7 +219,7 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $member             = User::findOrFail(decrypt($id));
+        $member             = User::with('member')->findOrFail(decrypt($id));
         $countries          = Country::where('status',1)->get();
         $states             = State::all();
         $cities             = City::all();
@@ -539,8 +541,9 @@ class MemberController extends Controller
       $marital_statuses   = MaritalStatus::all();
       $on_behalves        = OnBehalf::all();
       $languages          = MemberLanguage::all();
+      $islamic_education  = IslamicEducation::all();
 
-      return view('frontend.member.profile.index', compact('member','countries','states','cities','religions','castes','sub_castes','family_values','marital_statuses','on_behalves','languages'));
+      return view('frontend.member.profile.index', compact('member','countries','states','cities','religions','castes','sub_castes','family_values','marital_statuses','on_behalves','languages', 'islamic_education'));
     }
 
     public function unapproved_profile_pictures(){

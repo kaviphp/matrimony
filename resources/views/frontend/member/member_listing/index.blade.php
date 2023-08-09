@@ -223,6 +223,10 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    @if ($loop->iteration == 1)
+                                    <x-ads :ads="$ads" />
+                                    @endif
                                 @endforeach
                             </div>
                             <div class="aiz-pagination">

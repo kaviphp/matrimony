@@ -38,7 +38,7 @@ class StaffController extends Controller
      */
     public function create()
     {
-        $roles = Role::latest()->get();
+        $roles = Role::where('id', '!=', 1)->latest()->get();
         return view('admin.staff.staffs.create', compact('roles'));
     }
 
@@ -108,7 +108,7 @@ class StaffController extends Controller
     public function edit($id)
     {
         $staff = Staff::findOrFail(decrypt($id));
-        $roles = Role::latest()->get();
+        $roles = Role::where('id', '!=', 1)->latest()->get();
         return view('admin.staff.staffs.edit', compact('staff','roles'));
     }
 

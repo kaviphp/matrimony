@@ -8,7 +8,7 @@
 
 <section class="py-5 bg-white">
     <div class="container">
-        <div class="aiz-carousel" data-items="4" data-xl-items="3" data-md-items="2" data-sm-items="1" data-dots='true' data-infinite='true' data-autoplay='true'>
+        <div class="aiz-carousel mb-4" data-items="4" data-xl-items="3" data-md-items="2" data-sm-items="1" data-dots='true' data-infinite='true' data-autoplay='true'>
             @foreach ($packages as $key => $package)
                 <div class="carousel-box">
                     <div class="overflow-hidden shadow-none border-right">
@@ -76,6 +76,8 @@
                 </div>
             @endforeach
         </div>
+
+        <x-ads :ads="$ads" />
     </div>
 </section>
 @endsection

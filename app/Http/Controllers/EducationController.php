@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Education;
+use App\Models\IslamicEducation;
 use Validator;
 use Redirect;
 
@@ -40,6 +41,12 @@ class EducationController extends Controller
         $member_id = $request->id;
         return view('frontend.member.profile.education.create', compact('member_id'));
     }
+    public function islam_create(Request $request)
+    {
+        $member_id = $request->id;
+        $islamic_education  = IslamicEducation::all();
+        return view('frontend.member.profile.islamic.create', compact('member_id', 'islamic_education'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -59,6 +66,7 @@ class EducationController extends Controller
 
         $education              = new Education;
         $education->user_id     = $request->user_id;
+        $education->education_type = $request->education_type;
         $education->degree      = $request->degree;
         $education->institution = $request->institution;
         $education->start       = $request->education_start;
@@ -96,6 +104,12 @@ class EducationController extends Controller
      {
          $education = Education::findOrFail($request->id);
          return view('frontend.member.profile.education.edit', compact('education'));
+     }
+     public function islam_edit(Request $request)
+     {
+         $education = Education::findOrFail($request->id);
+         $islamic_education = IslamicEducation::all();
+         return view('frontend.member.profile.islamic.edit', compact('education', 'islamic_education'));
      }
     /**
      * Update the specified resource in storage.

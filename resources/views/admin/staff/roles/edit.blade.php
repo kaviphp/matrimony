@@ -33,12 +33,26 @@
                     $permission_groups =  \App\Models\Permission::all()->groupBy('parent');
                 @endphp
                 @foreach ($permission_groups as $key => $permission_group)
+                    @php
+                        $show = false;
+                    @endphp
+                    @foreach ($permission_group as $permission)
+                        @can($permission->name)
+                            @php
+                                $show = true;
+                                break;
+                            @endphp
+                        @endcan
+                    @endforeach
+
+                    @if($show)
                     <div class="bd-example">
                         <ul class="list-group">
                           <li class="list-group-item bg-light" aria-current="true">{{ translate(ucwords((str_replace('_', ' ', $permission_group[0]['parent'])))) }}</li>
                           <li class="list-group-item">
                               <div class="row">
                                 @foreach ($permission_group as $key => $permission)
+                                    @can($permission->name)
                                     @php
                                         $check = true;
                                         if($permission_group[0]['parent'] == 'otp_system' || $permission_group[0]['parent'] == 'support_tickets' || $permission_group[0]['parent'] == 'referral_system')
@@ -52,7 +66,7 @@
                                       <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
                                           <div class="p-2 border mt-1 mb-2">
                                             <label class="control-label d-flex">{{ translate(Str::headline($permission->name)) }}</label>
-                                                
+
                                               <label class="aiz-switch aiz-switch-success">
                                                   <input type="checkbox" name="permissions[]" class="form-control demo-sw" value="{{ $permission->id }}"
                                                       @if ($role->hasPermissionTo($permission->name))
@@ -63,12 +77,14 @@
                                           </div>
                                       </div>
                                     @endif
+                                    @endcan
                                 @endforeach
                             </div>
                         </li>
                       </ul>
                   </div>
                   <br>
+                  @endif
                 @endforeach
                 <div class="form-group mb-3 mt-3 text-right">
                     <button type="submit" class="btn btn-primary">{{translate('Update')}}</button>

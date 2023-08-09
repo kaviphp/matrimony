@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactUsRequest;
+use App\Models\Advertisement;
 use App\Models\ContactUs;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\EmailNotification;
@@ -121,6 +122,9 @@ class ContactUsController extends Controller
 
     public function show_contact_us_page()
     {
-        return view('frontend.contact_us');
+        $ads = Advertisement::with('images')->whereHas('advertisementPages', function ($query) {
+            $query->where('name', 'Active members');
+        })->get();
+        return view('frontend.contact_us', compact('ads'));
     }
 }

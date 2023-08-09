@@ -7,6 +7,7 @@
     </div>
     <div class="modal-body">
         <input type="hidden" name="user_id" value="{{ $member_id }}">
+        <input type="hidden" name="education_type" value="0">
         <div class="form-group row">
             <label class="col-md-3 col-form-label">{{translate('Degree')}}</label>
             <div class="col-md-9">
