@@ -48,9 +48,11 @@
                                         class="btn btn-block btn-primary">{{ translate('Send') }}</button>
                                 </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
+                <x-ads :ads="$ads" />
             </div>
         </div>
     </div>

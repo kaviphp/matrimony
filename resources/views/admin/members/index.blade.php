@@ -114,6 +114,22 @@
                                                 @can ('update_member_package')
                                                     <a class="dropdown-item" onclick="package_info({{$member->id}})" href="javascript:void(0);" >{{translate('Package')}}</a>
                                                 @endcan
+                                                @if ($member->isFeatured)
+                                                <form action="{{ route('featured_profile.destroy', $member) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="dropdown-item" type="submit">
+                                                        Remove from Featured Profile
+                                                    </button>
+                                                </form>
+                                                @else
+                                                <form action="{{ route('featured_profile.store', $member) }}" method="post">
+                                                    @csrf
+                                                    <button class="dropdown-item" type="submit">
+                                                        Set as Featured Profile
+                                                    </button>
+                                                </form>
+                                                @endif
                                                 @can('offline_wallet_recharge_requests')
                                                     <a class="dropdown-item" onclick="wallet_balance_update({{$member->id}},{{$member->balance}})" href="javascript:void(0);" >{{translate('Wallet Balance')}}</a>
                                                 @endcan

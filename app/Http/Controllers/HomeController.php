@@ -13,6 +13,7 @@ use App\Models\PhysicalAttribute;
 use App\Models\SpiritualBackground;
 use App\Models\Career;
 use App\Models\Address;
+use App\Models\Advertisement;
 use App\Models\HappyStory;
 use App\Models\IgnoredUser;
 use App\Models\ProfileMatch;
@@ -38,11 +39,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $members = User::where('user_type', 'member')
             ->where('approved', 1)
             ->where('blocked', 0)
             ->where('deactivated', 0);
+
+        $featuredProfiles = User::where(['user_type' => 'member', 'isFeatured' => 1])->get();
 
         if (Auth::user() && Auth::user()->user_type == 'member') {
             $members = $members->where('id', '!=', Auth::user()->id)
@@ -66,11 +68,17 @@ class HomeController extends Controller
         $premium_members = $members;
         $new_members = $members;
 
-        $new_members = $new_members->orderBy('id', 'desc')->limit(get_setting('max_new_member_show_homepage'))->get()->shuffle();
-        $premium_members = $premium_members->where('membership', 2)->inRandomOrder()->limit(get_setting('max_premium_member_homepage'))->get();
+        $new_members = $new_members->orderBy('id', 'desc')
+            ->limit(get_setting('max_new_member_show_homepage'))->get()->shuffle();
+        $premium_members = $premium_members->where('membership', 2)->inRandomOrder()
+            ->limit(get_setting('max_premium_member_homepage'))->get();
+        $ads = Advertisement::with('images')->whereHas('advertisementPages', function ($query) {
+            $query->where('name', 'Home');
+        })->get();
 
-
-        return view('frontend.index', compact('premium_members', 'new_members'));
+        return view('frontend.index', compact([
+            'premium_members', 'new_members', 'featuredProfiles', 'ads'
+        ]));
     }
 
 
@@ -96,7 +104,7 @@ class HomeController extends Controller
     {
         return view('admin.dashboard');
     }
-    
+
     // Manage Admin Profile
     public function admin_profile_update(Request $request, $id)
     {
@@ -149,7 +157,10 @@ class HomeController extends Controller
     public function happy_stories()
     {
         $happy_stories = HappyStory::where('approved', 1)->latest()->paginate(12);
-        return view('frontend.happy_stories.index', compact('happy_stories'));
+        $ads = Advertisement::with('images')->whereHas('advertisementPages', function ($query) {
+            $query->where('name', 'Active members');
+        })->get();
+        return view('frontend.happy_stories.index', compact('happy_stories', 'ads'));
     }
 
     public function story_details($id)
@@ -292,7 +303,16 @@ class HomeController extends Controller
         }
 
         $users = $users->paginate(10);
-        return view('frontend.member.member_listing.index', compact('users', 'age_from', 'age_to', 'member_code', 'matital_status', 'religion_id', 'caste_id', 'sub_caste_id', 'mother_tongue', 'profession', 'country_id', 'state_id', 'city_id', 'min_height', 'max_height', 'member_type'));
+
+        $ads = Advertisement::with('images')->whereHas('advertisementPages', function ($query) {
+            $query->where('name', 'Active members');
+        })->get();
+        return view('frontend.member.member_listing.index',
+        compact([
+            'users', 'age_from', 'age_to', 'member_code', 'matital_status', 'religion_id',
+            'caste_id', 'sub_caste_id', 'mother_tongue', 'profession', 'ads',
+            'country_id', 'state_id', 'city_id', 'min_height', 'max_height', 'member_type'
+        ]));
     }
 
     public function profile_edit(Request $request)

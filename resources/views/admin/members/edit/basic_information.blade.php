@@ -32,8 +32,8 @@
                     <span class="text-danger">*</span>
                 </label>
                 <select class="form-control aiz-selectpicker" name="gender" required>
-                    <option value="1" @if($member->member->gender ==  1) selected @endif >{{translate('Male')}}</option>
-                    <option value="2" @if($member->member->gender ==  2) selected @endif >{{translate('Female')}}</option>
+                    <option value="1" @if($member->member?->gender ==  1) selected @endif >{{translate('Male')}}</option>
+                    <option value="2" @if($member->member?->gender ==  2) selected @endif >{{translate('Female')}}</option>
                     @error('gender')
                         <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
@@ -43,7 +43,7 @@
                 <label for="first_name" >{{translate('Date Of Birth')}}
                     <span class="text-danger">*</span>
                 </label>
-                <input type="text" class="aiz-date-range form-control" value="@if(!empty($member->member->birthday)) {{date('Y-m-d', strtotime($member->member->birthday))}} @endif" name="date_of_birth"  placeholder="Select Date" data-single="true" data-show-dropdown="true" data-max-date="{{ get_max_date() }}" autocomplete="off" required>
+                <input type="text" class="aiz-date-range form-control" value="@if(!empty($member->member?->birthday)) {{date('Y-m-d', strtotime($member->member?->birthday))}} @endif" name="date_of_birth"  placeholder="Select Date" data-single="true" data-show-dropdown="true" data-max-date="{{ get_max_date() }}" autocomplete="off" required>
                 @error('date_of_birth')
                     <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
@@ -74,7 +74,7 @@
                 </label>
                 <select class="form-control aiz-selectpicker" name="on_behalf" data-live-search="true" required>
                     @foreach ($on_behalves as $on_behalf)
-                        <option value="{{$on_behalf->id}}" @if($member->member->on_behalves_id == $on_behalf->id) selected @endif>{{$on_behalf->name}}</option>
+                        <option value="{{$on_behalf->id}}" @if($member->member?->on_behalves_id == $on_behalf->id) selected @endif>{{$on_behalf->name}}</option>
                     @endforeach
                 </select>
                 @error('on_behalf')
@@ -89,7 +89,7 @@
                 </label>
                 <select class="form-control aiz-selectpicker" name="marital_status" data-live-search="true" required>
                     @foreach ($marital_statuses as $marital_status)
-                        <option value="{{$marital_status->id}}" @if($member->member->marital_status_id == $marital_status->id) selected @endif>{{$marital_status->name}}</option>
+                        <option value="{{$marital_status->id}}" @if($member->member?->marital_status_id == $marital_status->id) selected @endif>{{$marital_status->name}}</option>
                     @endforeach
                 </select>
                 @error('marital_status')
@@ -100,7 +100,7 @@
                 <label for="first_name" >{{translate('Number Of Children')}}
                     <span class="text-danger">*</span>
                 </label>
-                <input type="text" name="children" value="{{ $member->member->children }}" class="form-control" placeholder="{{translate('Number Of Children')}}" >
+                <input type="text" name="children" value="{{ $member->member?->children }}" class="form-control" placeholder="{{translate('Number Of Children')}}" >
             </div>
         </div>
         <div class="form-group row">

@@ -159,7 +159,9 @@ Route::group(['middleware' => ['auth']], function () {
     // Member education
     Route::resource('/education', 'EducationController');
     Route::post('/education/create', 'EducationController@create')->name('education.create');
+    Route::post('/islam-education/create', 'EducationController@islam_create')->name('islam_education.create');
     Route::post('/education/edit', 'EducationController@edit')->name('education.edit');
+    Route::post('/islam-education/edit', 'EducationController@islam_edit')->name('islam_education.edit');
     Route::post('/education/update_education_present_status', 'EducationController@update_education_present_status')->name('education.update_education_present_status');
     Route::get('/education/destroy/{id}', 'EducationController@destroy')->name('education.destroy');
 

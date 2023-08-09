@@ -13,22 +13,22 @@
 
 
 //Verofocation phone
-Route::get('/verification', 'OTPVerificationController@verification')->name('verification');
-Route::post('/verification', 'OTPVerificationController@verify_phone')->name('verification.submit');
-Route::get('/verification/phone/code/resend', 'OTPVerificationController@resend_verificcation_code')->name('verification.phone.resend');
+// Route::get('/verification', 'OTPVerificationController@verification')->name('verification');
+// Route::post('/verification', 'OTPVerificationController@verify_phone')->name('verification.submit');
+// Route::get('/verification/phone/code/resend', 'OTPVerificationController@resend_verificcation_code')->name('verification.phone.resend');
 
-//Forgot password phone
-Route::post('/password/reset/submit', 'OTPVerificationController@reset_password_with_code')->name('password.update.phone');
+// //Forgot password phone
+// Route::post('/password/reset/submit', 'OTPVerificationController@reset_password_with_code')->name('password.update.phone');
 
-//Admin
-Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function(){
+// //Admin
+// Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function(){
 
-    Route::get('/otp-credentials-configuration', 'OTPController@credentials_index')->name('otp_credentials.index');
-	Route::post('/otp-credentials-update', 'OTPController@update_credentials')->name('update_credentials');
+//     Route::get('/otp-credentials-configuration', 'OTPController@credentials_index')->name('otp_credentials.index');
+// 	Route::post('/otp-credentials-update', 'OTPController@update_credentials')->name('update_credentials');
 
-    Route::resource('/sms-templates','SmsTemplateController');
+//     Route::resource('/sms-templates','SmsTemplateController');
 
-    //Messaging
-    Route::get('/bulk-sms', 'OTPController@bulk_sms')->name('bulk_sms.index');
-    Route::post('/bulk-sms-send', 'OTPController@bulk_sms_send')->name('bulk_sms.send');
-});
+//     //Messaging
+//     Route::get('/bulk-sms', 'OTPController@bulk_sms')->name('bulk_sms.index');
+//     Route::post('/bulk-sms-send', 'OTPController@bulk_sms_send')->name('bulk_sms.send');
+// });

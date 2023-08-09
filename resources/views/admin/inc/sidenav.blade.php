@@ -155,6 +155,11 @@
                                         </a>
                                     </li>
                                 @endcan
+                                <li class="aiz-side-nav-item">
+                                    <a href="{{ route('islamic-education.index') }}" class="aiz-side-nav-link">
+                                        <span class="aiz-side-nav-text">{{ translate('Islamic Education') }}</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         @endcan
@@ -262,7 +267,7 @@
                         </ul>
                     </li>
                 @endif
-                
+
                 <!-- Messaging -->
                 @can('newsletter')
                     <li class="aiz-side-nav-item">
@@ -275,6 +280,11 @@
                             <li class="aiz-side-nav-item">
                                 <a href="{{ route('newsletters.index') }}" class="aiz-side-nav-link">
                                     <span class="aiz-side-nav-text">{{ translate('Newsletter') }}</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('ads.index') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">{{ translate('Advertisement') }}</span>
                                 </a>
                             </li>
                         </ul>

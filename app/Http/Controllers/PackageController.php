@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
 use Illuminate\Http\Request;
 use App\Models\Package;
 use App\Models\Member;
@@ -204,7 +205,10 @@ class PackageController extends Controller
     public function select_package()
     {
         $packages = Package::where('active', '1')->get();
-        return view('frontend.package.packages', compact('packages'));
+        $ads = Advertisement::with('images')->whereHas('advertisementPages', function ($query) {
+            $query->where('name', 'Home');
+        })->get();
+        return view('frontend.package.packages', compact('packages', 'ads'));
 
     }
 
