@@ -118,7 +118,7 @@ class ViewProfilePictureController extends Controller
                     ->sendMessage($fcmTokens);
                 }
                 // end of fcm
-
+                
                 Notification::send($notify_user, new DbStoreNotification($notify_type, $id, $notify_by, $info_id, $message, $route));
             } catch (\Exception $e) {
                 // dd($e);

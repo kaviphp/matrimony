@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\EmailVerificationNotification;
 use Laravel\Sanctum\HasApiTokens;
-
+use Spatie\Activitylog\Models\Activity;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -74,7 +74,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function activityLogs()
     {
-        return $this->hasMany(Activitylog::class, 'causer_id')->latest();
+        return $this->hasMany(Activity::class, 'causer_id')->latest();
     }
 
     public function member()
