@@ -3,7 +3,7 @@
 .env.php
 /node_modules
 /storage/*.key
-/vendor
+
 /temp
 /.idea
 /.vscode

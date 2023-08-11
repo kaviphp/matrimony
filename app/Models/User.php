@@ -72,6 +72,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function activityLogs()
+    {
+        return $this->hasMany(Activitylog::class, 'causer_id')->latest();
+    }
+
     public function member()
     {
         return $this->hasOne(Member::class);

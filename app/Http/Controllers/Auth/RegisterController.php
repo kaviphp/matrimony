@@ -180,6 +180,7 @@ class RegisterController extends Controller
         }
 
         if ($user->phone != null) {
+            activity()->causedBy($user)->log('Profile registered successfully.');
             flash(translate('Registration successfull. Please verify your phone number.'))->success();
         }
 

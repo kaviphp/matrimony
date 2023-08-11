@@ -90,11 +90,12 @@ class VerificationController extends Controller
                     ->orWhere('phone', $request->email);
             })
             ->first();
-        
+
         if($user != null){
             $user->email_verified_at = Carbon::now();
             $user->save();
             auth()->login($user, true);
+            activity()->causedBy(auth()->user())->log('User account has been verified successfully.');
             flash(translate('Your email has been verified successfully'))->success();
         }
         else {

@@ -15,8 +15,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-        
-       
+
+
     }
 
     /**
@@ -131,10 +131,12 @@ class AddressController extends Controller
 
 
          if($address->save()){
+            activity()->causedBy(auth()->user())->log('User address has been updated.');
              flash(translate('Address info has been updated successfully'))->success();
              return back();
          }
          else {
+            activity()->causedBy(auth()->user())->log('User try to update address.');
              flash(translate('Sorry! Something went wrong.'))->error();
              return back();
          }
