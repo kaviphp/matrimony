@@ -114,6 +114,7 @@
                                                 @can ('update_member_package')
                                                     <a class="dropdown-item" onclick="package_info({{$member->id}})" href="javascript:void(0);" >{{translate('Package')}}</a>
                                                 @endcan
+                                                <a class="dropdown-item" href="{{ route('members.view.log', $member) }}">{{translate('View Activity Log')}}</a>
                                                 @if ($member->isFeatured)
                                                 <form action="{{ route('featured_profile.destroy', $member) }}" method="post">
                                                     @csrf

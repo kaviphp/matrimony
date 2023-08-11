@@ -108,6 +108,17 @@ class MemberController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function viewLog(User $user)
+    {
+        $activityLogs = $user->activityLogs()->paginate(50);
+        return view('admin.members.view_activity_log', compact('user', 'activityLogs'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

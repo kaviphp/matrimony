@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/contact-us/destroy/{id}', 'ContactUsController@destroy')->name('contact-us.delete');
 
     // Member Manage
+    Route::get('/members/{user}/view-log', 'MemberController@viewLog')->name('members.view.log');
     Route::resource('/members', 'MemberController');
     Route::get('/members/member_list/{id}', 'MemberController@index')->name('members.index');
     Route::post('/members/approve', 'MemberController@approve')->name('members.approve');
