@@ -182,6 +182,7 @@ class LoginController extends Controller
 
     public function authenticated()
     {
+        activity()->causedBy(auth()->user())->log('User logged in');
         if (auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'staff') {
             return redirect()->route('admin.dashboard');
         } else {
