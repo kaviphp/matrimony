@@ -215,7 +215,7 @@ class LoginController extends Controller
         } else {
             $redirect_route = 'home';
         }
-
+        
         $this->guard()->logout();
 
         $request->session()->invalidate();

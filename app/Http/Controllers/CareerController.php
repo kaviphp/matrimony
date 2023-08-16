@@ -63,10 +63,12 @@ class CareerController extends Controller
          $career->end         = $request->career_end;
 
          if($career->save()){
+            activity()->causedBy(auth()->user())->log('Career Info has been added.');
              flash(translate('Career Info has been added successfully'))->success();
              return back();
          }
          else {
+            activity()->causedBy(auth()->user())->log('User try to add career information.');
              flash(translate('Sorry! Something went wrong.'))->error();
              return back();
          }
@@ -119,10 +121,12 @@ class CareerController extends Controller
          $career->end         = $request->career_end;
 
          if($career->save()){
+            activity()->causedBy(auth()->user())->log('Career Info has been updated.');
              flash(translate('Career Info has been updated successfully'))->success();
              return back();
          }
          else {
+            activity()->causedBy(auth()->user())->log('User try to update Career Information.');
              flash(translate('Sorry! Something went wrong.'))->error();
              return back();
          }
@@ -150,6 +154,7 @@ class CareerController extends Controller
      {
          if(Career::destroy($id))
          {
+            activity()->causedBy(auth()->user())->log('User try to delete their Career Information.');
              flash(translate('Career info has been deleted successfully'))->success();
              return back();
          }

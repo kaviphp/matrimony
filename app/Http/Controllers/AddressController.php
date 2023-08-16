@@ -110,36 +110,36 @@ class AddressController extends Controller
              return Redirect::back()->withErrors($validator);
          }
 
-         $address = Address::where('user_id', $id)->where('type',$request->address_type)->first();
-         if(empty($address)){
-             $address = new Address;
-             $address->user_id = $id;
-         }
-         if($address_type == 'present'){
-             $address->country_id   = $request->present_country_id;
-             $address->state_id     = $request->present_state_id;
-             $address->city_id      = $request->present_city_id;
-             $address->postal_code  = $request->present_postal_code;
-         }
-         elseif($address_type == 'permanent'){
-             $address->country_id   = $request->permanent_country_id;
-             $address->state_id     = $request->permanent_state_id;
-             $address->city_id      = $request->permanent_city_id;
-             $address->postal_code  = $request->permanent_postal_code;
-         }
-         $address->type             = $address_type;
+        $address = Address::where('user_id', $id)->where('type',$request->address_type)->first();
+        if(empty($address)){
+            $address = new Address;
+            $address->user_id = $id;
+        }
+        if($address_type == 'present'){
+            $address->country_id   = $request->present_country_id;
+            $address->state_id     = $request->present_state_id;
+            $address->city_id      = $request->present_city_id;
+            $address->postal_code  = $request->present_postal_code;
+        }
+        elseif($address_type == 'permanent'){
+            $address->country_id   = $request->permanent_country_id;
+            $address->state_id     = $request->permanent_state_id;
+            $address->city_id      = $request->permanent_city_id;
+            $address->postal_code  = $request->permanent_postal_code;
+        }
+        $address->type             = $address_type;
 
 
-         if($address->save()){
+        if($address->save()){
             activity()->causedBy(auth()->user())->log('User address has been updated.');
-             flash(translate('Address info has been updated successfully'))->success();
-             return back();
-         }
-         else {
+            flash(translate('Address info has been updated successfully'))->success();
+            return back();
+        }
+        else {
             activity()->causedBy(auth()->user())->log('User try to update address.');
-             flash(translate('Sorry! Something went wrong.'))->error();
-             return back();
-         }
+            flash(translate('Sorry! Something went wrong.'))->error();
+            return back();
+        }
 
      }
 
