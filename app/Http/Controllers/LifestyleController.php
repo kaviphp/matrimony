@@ -105,6 +105,7 @@ class LifestyleController extends Controller
          $lifestyle->living_with   = $request->living_with;
 
          if($lifestyle->save()){
+            activity()->causedBy(auth()->user())->log('User lifestyle Info has been updated.');
              flash(translate('Lifestyle info has been updated successfully'))->success();
              return back();
          }

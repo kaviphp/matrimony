@@ -98,6 +98,7 @@ class RecidencyController extends Controller
          $recidencies->immigration_status       = $request->immigration_status;
 
          if($recidencies->save()){
+            activity()->causedBy(auth()->user())->log('User residency Info has been updated.');
             flash(translate('Residency Info has been updated successfully'))->success();
             return back();
          }

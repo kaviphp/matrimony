@@ -102,6 +102,7 @@ class FamilyController extends Controller
          $family->sibling   = $request->sibling;
 
          if($family->save()){
+            activity()->causedBy(auth()->user())->log('User family Info has been updated.');
              flash(translate('Family info has been updated successfully'))->success();
              return back();
          }
