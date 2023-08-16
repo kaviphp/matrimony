@@ -147,6 +147,8 @@ class PartnerExpectationController extends Controller
               $ProfileMatchController = new ProfileMatchController;
               $ProfileMatchController->match_profiles($user->id);
             }
+            activity()->causedBy(auth()->user())->log('User Partner Expectations
+             Info has been updated.');
             flash(translate('Partner Expectations Info has been updated successfully'))->success();
             return back();
           }
