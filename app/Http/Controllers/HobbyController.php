@@ -87,6 +87,7 @@ class HobbyController extends Controller
          $hobbies->dress_styles         = $request->dress_styles;
 
          if($hobbies->save()){
+            activity()->causedBy(auth()->user())->log('User hobbies updated.');
              flash(translate('Hobby and Interests info has been updated successfully'))->success();
              return back();
          }
