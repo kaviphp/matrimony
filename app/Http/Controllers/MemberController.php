@@ -257,6 +257,7 @@ class MemberController extends Controller
         $member = Member::findOrFail($id);
         $member->introduction = $request->introduction;
         if($member->save()){
+            activity()->causedBy(auth()->user())->log('User introduction info has been updated successfully.');
             flash('Member introduction info has been updated successfully')->success();
             return back();
         }
@@ -320,6 +321,7 @@ class MemberController extends Controller
 
         if($member->save())
         {
+            activity()->causedBy(auth()->user())->log('User basic information info has been updated successfully.');
             flash('Member basic info  has been updated successfully')->success();
             return back();
         }
@@ -336,6 +338,7 @@ class MemberController extends Controller
 
         if($member->save())
         {
+            activity()->causedBy(auth()->user())->log('User language info has been updated.');
             flash('Member language info has been updated successfully')->success();
             return back();
         }
@@ -362,6 +365,7 @@ class MemberController extends Controller
                 SmsUtility::account_approval($member);
             }
 
+            activity()->causedBy(auth()->user())->log('User approved.');
             flash('Member Approved')->success();
             return redirect()->route('members.index', $member->membership);
         } else {
@@ -406,6 +410,7 @@ class MemberController extends Controller
         $user = User::findOrFail($id);
         $membership = $user->membership;
         if (User::destroy($id)) {
+            activity()->causedBy(auth()->user())->log('User added to deleted members list.');
             flash('Member has been added to the deleted member list')->success();
             return redirect()->route('members.index', $membership);
         } else {
@@ -417,6 +422,7 @@ class MemberController extends Controller
     public function restore_deleted_member($id)
     {
         if (User::withTrashed()->where('id', $id)->restore()) {
+            activity()->causedBy(auth()->user())->log('User restored from deleted members list.');
             flash('Member has been restored successfully')->success();
             return redirect()->route('deleted_members');
         } else {
@@ -429,6 +435,7 @@ class MemberController extends Controller
       $user = User::withTrashed()->where('id', $id)->first();
       $user->permanently_delete = 1;
         if ($user->save()) {
+            activity()->causedBy(auth()->user())->log('User permanently deleted from members list.');
             flash('Member permanently deleted successfully')->success();
             return redirect()->route('deleted_members');
         } else {
@@ -469,6 +476,7 @@ class MemberController extends Controller
             $user                = User::where('id',$member->user_id)->first();
             $user->membership    = $membership;
             if($user->save()){
+                activity()->causedBy(auth()->user())->log('User package updated.');
                 flash(translate('Member package has been updated successfully'))->success();
                 return redirect()->route('members.index', $membership);
             }
@@ -496,6 +504,7 @@ class MemberController extends Controller
         }
 
         if($user->save()){
+            activity()->causedBy(auth()->user())->log('User wallet balance updated.');
           flash(translate('Wallet Balance Updated Successfully'))->success();
           return back();
         }
@@ -514,7 +523,7 @@ class MemberController extends Controller
             $member                 = Member::where('user_id', $user->id)->first();
             $member->blocked_reason = !empty($request->blocking_reason) ? $request->blocking_reason : "" ;
             if($member->save()){
-
+                activity()->causedBy(auth()->user())->log($user->blocked == 1 ? translate('Member Blocked !') : translate('Member Unblocked !'));
                 flash($user->blocked == 1 ? translate('Member Blocked !') : translate('Member Unblocked !') )->success();
                 return back();
             }
@@ -566,6 +575,7 @@ class MemberController extends Controller
         $user = User::findOrFail($request->id);
         $user->photo_approved = 1;
         if ($user->save()) {
+            activity()->causedBy(auth()->user())->log('User profile picture updated.');
             flash(translate('Profile Picture Approved Successfully'))->success();
             return 1;
         }
@@ -605,7 +615,8 @@ class MemberController extends Controller
       {
         $user->password = Hash::make($request->password);
         $user->save();
-        flash(translate('Passwoed Updated successfully.'))->success();
+        activity()->causedBy(auth()->user())->log('User try to delete their Career Information.');
+        flash(translate('Password Updated successfully.'))->success();
         return redirect()->route('member.change_password');
       }
       else
@@ -622,6 +633,7 @@ class MemberController extends Controller
         $deacticvation_msg = $request->deacticvation_status == 1 ? translate('deactivated') : translate('reactivated');
         if($user->save())
         {
+            activity()->causedBy(auth()->user())->log(translate('Account ').$deacticvation_msg.'.');
             flash(translate('Your account ').$deacticvation_msg.translate(' successfully!'))->success();
             return redirect()->route('dashboard');
         }

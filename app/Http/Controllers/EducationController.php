@@ -73,6 +73,7 @@ class EducationController extends Controller
         $education->end         = $request->education_end;
 
         if($education->save()){
+            activity()->causedBy(auth()->user())->log('User Education Info has been added.');
             flash(translate('Education Info has been added successfully'))->success();
             return back();
         }
@@ -135,6 +136,7 @@ class EducationController extends Controller
         $education->end         = $request->education_end;
 
         if($education->save()){
+            activity()->causedBy(auth()->user())->log('User Education Info has been updated.');
             flash(translate('Education Info has been updated successfully'))->success();
             return back();
         }
@@ -166,6 +168,7 @@ class EducationController extends Controller
     {
         if(Education::destroy($id))
         {
+            activity()->causedBy(auth()->user())->log('User Education Info has been deleted.');
             flash(translate('Education info has been deleted successfully'))->success();
             return back();
         }

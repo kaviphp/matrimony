@@ -129,6 +129,7 @@ class PhysicalAttributeController extends Controller
          $physical_attribute->disability    = $request->disability;
 
          if($physical_attribute->save()){
+            activity()->causedBy(auth()->user())->log('User Physical Attribute Info has been updated.');
              flash(translate('Physical Attribute Info has been updated successfully'))->success();
              return back();
          }
