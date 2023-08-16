@@ -144,6 +144,7 @@ class PackagePaymentController extends Controller
             Session::forget('payment_data');
             Session::forget('payment_type');
 
+            activity()->causedBy(auth()->user())->log('User purchase package.');
             flash(translate('Payment completed'))->success();
             return redirect()->route('package_payment.invoice', $package_payment->id);
         }
@@ -235,6 +236,7 @@ class PackagePaymentController extends Controller
         Session::forget('payment_data');
         Session::forget('payment_type');
 
+        activity()->causedBy(auth()->user())->log('User purchase package.');
         flash(translate('Payment completed'))->success();
         return redirect()->route('package_payment.invoice', $package_payment->id);
     }
@@ -358,7 +360,8 @@ class PackagePaymentController extends Controller
             }
         }
 
-        flash(translate('Payemnt accepted successfully.'))->success();
+        activity()->causedBy(auth()->user())->log('User payment accepted.');
+        flash(translate('Payment accepted successfully.'))->success();
         return back();
     }
 
