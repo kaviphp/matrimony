@@ -83,6 +83,9 @@
       @include('frontend.member.profile.career.index')
     @endif
 
+    <!--  Mahr Will Give  -->
+    @include('frontend.member.profile.mahrGive.index')
+
     <!-- Physical Attributes -->
     @if(get_setting('member_physical_attributes_section') == 'on')
       @include('frontend.member.profile.physical_attributes')
@@ -466,6 +469,20 @@
             $('.create_edit_modal_content').html(data);
             $('.create_edit_modal').modal('show');
         });
+    }
+
+    function mahrGive_add_modal(id){
+       $.post('{{ route('mahr-give.create') }}',{_token:'{{ @csrf_token() }}', id:id}, function(data){
+           $('.create_edit_modal_content').html(data);
+           $('.create_edit_modal').modal('show');
+       });
+    }
+
+    function mahrGive_edit_modal(id){
+       $.post('{{ route('mahr-give.edit') }}',{_token:'{{ @csrf_token() }}', id:id}, function(data){
+           $('.create_edit_modal_content').html(data);
+           $('.create_edit_modal').modal('show');
+       });
     }
 
     function update_career_present_status(el) {

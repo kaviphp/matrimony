@@ -156,6 +156,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('/address', 'AddressController');
 
+    Route::resource('/mahr-give', 'MahrGiveController');
+    Route::post('/mahr-give/create', 'MahrGiveController@create')->name('mahr-give.create');
+    Route::post('/mahr-give/edit', 'MahrGiveController@edit')->name('mahr-give.edit');
+    Route::get('/mahr-give/destroy/{id}', 'MahrGiveController@destroy')->name('mahr-give.destroy');
+
     // Member education
     Route::resource('/education', 'EducationController');
     Route::post('/education/create', 'EducationController@create')->name('education.create');

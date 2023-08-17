@@ -1001,6 +1001,7 @@ class ComposerStaticInit7ec6d28e7a5b31abe58f7cc5ef9ad41a
         'App\\Models\\IslamicEducation' => __DIR__ . '/../..' . '/app/Models/IslamicEducation.php',
         'App\\Models\\Language' => __DIR__ . '/../..' . '/app/Models/Language.php',
         'App\\Models\\Lifestyle' => __DIR__ . '/../..' . '/app/Models/Lifestyle.php',
+        'App\\Models\\MahrGive' => __DIR__ . '/../..' . '/app/Models/MahrGive.php',
         'App\\Models\\MaritalStatus' => __DIR__ . '/../..' . '/app/Models/MaritalStatus.php',
         'App\\Models\\Member' => __DIR__ . '/../..' . '/app/Models/Member.php',
         'App\\Models\\MemberLanguage' => __DIR__ . '/../..' . '/app/Models/MemberLanguage.php',

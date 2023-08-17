@@ -72,6 +72,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function mahrGives()
+    {
+        return $this->hasMany(MahrGive::class);
+    }
+
     public function activityLogs()
     {
         return $this->hasMany(Activity::class, 'causer_id')->latest();
