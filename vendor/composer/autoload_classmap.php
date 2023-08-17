@@ -232,6 +232,7 @@ return array(
     'App\\Models\\IslamicEducation' => $baseDir . '/app/Models/IslamicEducation.php',
     'App\\Models\\Language' => $baseDir . '/app/Models/Language.php',
     'App\\Models\\Lifestyle' => $baseDir . '/app/Models/Lifestyle.php',
+    'App\\Models\\MahrGive' => $baseDir . '/app/Models/MahrGive.php',
     'App\\Models\\MaritalStatus' => $baseDir . '/app/Models/MaritalStatus.php',
     'App\\Models\\Member' => $baseDir . '/app/Models/Member.php',
     'App\\Models\\MemberLanguage' => $baseDir . '/app/Models/MemberLanguage.php',

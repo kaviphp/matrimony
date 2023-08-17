@@ -28,6 +28,7 @@
                                 @if(get_setting('member_language_section') == 'on')
                                 <a class="nav-link" id="v-pills-tab-7" data-toggle="pill" href="#language" role="tab" aria-controls="v-pills-settings" aria-selected="false">{{translate('Language')}}</a>
                                 @endif
+                                <a class="nav-link" id="v-pills-tab-111" data-toggle="pill" href="#mahr_give" role="tab" aria-controls="v-pills-settings" aria-selected="false">{{translate('Mahr Will Give')}}</a>
                                 @if(get_setting('member_hobbies_and_interests_section') == 'on')
                                 <a class="nav-link" id="v-pills-tab-8" data-toggle="pill" href="#hobbies_interest" role="tab" aria-controls="v-pills-settings" aria-selected="false">{{translate('Hobbies & Interest')}}</a>
                                 @endif
@@ -100,6 +101,11 @@
                                 <div class="tab-pane fade" id="language" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                                     <div class="card">
                                         @include('admin.members.edit.language')
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="mahr_give" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                    <div class="card">
+                                        @include('admin.members.edit.mahr_give')
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="hobbies_interest" role="tabpanel" aria-labelledby="v-pills-settings-tab">
@@ -428,10 +434,24 @@
            $('.create_edit_modal').modal('show');
        });
     }
-    
+
     //  education Add edit , status change
     function education_add_modal(id){
        $.post('{{ route('education.create') }}',{_token:'{{ @csrf_token() }}', id:id}, function(data){
+           $('.create_edit_modal_content').html(data);
+           $('.create_edit_modal').modal('show');
+       });
+    }
+
+    function mahrGive_add_modal(id){
+       $.post('{{ route('mahr-give.create') }}',{_token:'{{ @csrf_token() }}', id:id}, function(data){
+           $('.create_edit_modal_content').html(data);
+           $('.create_edit_modal').modal('show');
+       });
+    }
+
+    function mahrGive_edit_modal(id){
+       $.post('{{ route('mahr-give.edit') }}',{_token:'{{ @csrf_token() }}', id:id}, function(data){
            $('.create_edit_modal_content').html(data);
            $('.create_edit_modal').modal('show');
        });
