@@ -353,6 +353,125 @@
     @endif
 
 
+    <!-- How It Works Section -->
+    @if (get_setting('show_how_it_works_section') == 'on' && get_setting('how_it_works_steps_titles') != null)
+        <section class="py-8 bg-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 col-xl-8 col-xxl-6 mx-auto">
+                        <div class="text-center section-title mb-5">
+                            <h2 class="fw-600 mb-3">{{ get_setting('how_it_works_title') }}</h2>
+                            <p class="fw-400 fs-16 opacity-60">{{ get_setting('how_it_works_sub_title') }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutters-10">
+                    @php
+                        $how_it_works_steps_titles = json_decode(get_setting('how_it_works_steps_titles'));
+                        $step = 1;
+                    @endphp
+                    @foreach ($how_it_works_steps_titles as $key => $how_it_works_steps_title)
+                        <div class="col-lg">
+                            <div class="p-3 mb-3">
+                                <div class=" row align-items-center">
+                                    <div class="mt-3 col-12 pb-3 d-flex justify-content-center">
+                                        <img src="{{ uploaded_asset(json_decode(get_setting('how_it_works_steps_icons'), true)[$key]) }}"
+                                            class="img-fluid h-80px w-150px">
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <div class="text-secondary fs-20 mb-2 fw-600">{{ $how_it_works_steps_title }}
+                                        </div>
+                                        <div class="fs-15 opacity-60">
+                                            {{ json_decode(get_setting('how_it_works_steps_sub_titles'), true)[$key] }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+
+    <section class="py-4 bg-white">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-12 col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center mx-auto">
+                    <div class="section-title">
+                        <h2 class="fw-600 mb-3">Match with genuine folks with complete security!</h2>
+                        <p class="fw-400 fs-16 opacity-60">
+                            Mahr Nikah is India’s most trusted matrimonial site which has helped thousands of people like you to find their perfect life partner.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-6 order-1 order-lg-2">
+                    <div class="p-3 mb-3">
+                        <div class="row align-items-center">
+                            <div class="mt-3 col-12 pb-3 d-flex justify-content-center">
+                                <img src="/public/assets/img/male-female-form.svg"
+                                    class="img-fluid h-100vh" style="height: 300px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-4 bg-white">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-12 col-lg-6">
+                    <div class="p-3 mb-3">
+                        <div class=" row align-items-center">
+                            <div class="mt-3 col-12 pb-3 d-flex justify-content-center">
+                                <img src="/public/assets/img/online_discussion.svg"
+                                    class="img-fluid h-100vh" style="height: 300px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 d-flex flex-column justify-content-center mx-auto">
+                    <div class="section-title">
+                        <h2 class="fw-600 mb-3">You can able to chat with you are intrested</h2>
+                        <p class="fw-400 fs-16 opacity-60">
+                            Mahr Nikah is India’s most trusted matrimonial site which has helped thousands of people like you to find their perfect life partner.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-4 bg-white">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-12 col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center mx-auto">
+                    <div class="section-title">
+                        <h2 class="fw-600 mb-3">Discover Partners Who Align with Your Life Goals</h2>
+                        <p class="fw-400 fs-16 opacity-60">
+                            Experience a new level of matchmaking with our compatibility-based approach. Our smart algorithm considers your preferences and goals, facilitating connections with potential partners who align with your outlook on life. Build a foundation for a strong, enduring relationship.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-6 order-1 order-lg-2">
+                    <div class="p-3 mb-3">
+                        <div class="row align-items-center">
+                            <div class="mt-3 col-12 pb-3 d-flex justify-content-center">
+                                <img src="/public/assets/img/male-female-form.svg"
+                                    class="img-fluid h-100vh" style="height: 300px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Featured Profile Section -->
     <section class="py-9 bg-white">
         <div class="container">
@@ -426,48 +545,6 @@
     @endif
 
     <x-ads :ads="$ads" />
-
-    <!-- How It Works Section -->
-    @if (get_setting('show_how_it_works_section') == 'on' && get_setting('how_it_works_steps_titles') != null)
-        <section class="py-8 bg-white">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-10 col-xl-8 col-xxl-6 mx-auto">
-                        <div class="text-center section-title mb-5">
-                            <h2 class="fw-600 mb-3">{{ get_setting('how_it_works_title') }}</h2>
-                            <p class="fw-400 fs-16 opacity-60">{{ get_setting('how_it_works_sub_title') }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row gutters-10">
-                    @php
-                        $how_it_works_steps_titles = json_decode(get_setting('how_it_works_steps_titles'));
-                        $step = 1;
-                    @endphp
-                    @foreach ($how_it_works_steps_titles as $key => $how_it_works_steps_title)
-                        <div class="col-lg">
-                            <div class="border p-3 mb-3">
-                                <div class=" row align-items-center">
-                                    <div class="col-7">
-                                        <div class="text-primary fw-600 h1">{{ $step++ }}</div>
-                                        <div class="text-secondary fs-20 mb-2 fw-600">{{ $how_it_works_steps_title }}
-                                        </div>
-                                        <div class="fs-15 opacity-60">
-                                            {{ json_decode(get_setting('how_it_works_steps_sub_titles'), true)[$key] }}
-                                        </div>
-                                    </div>
-                                    <div class="mt-3 col-5 text-right">
-                                        <img src="{{ uploaded_asset(json_decode(get_setting('how_it_works_steps_icons'), true)[$key]) }}"
-                                            class="img-fluid h-80px">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
 
     <!-- Trusted by Millions Section -->
     @if (get_setting('show_trusted_by_millions_section') == 'on')
