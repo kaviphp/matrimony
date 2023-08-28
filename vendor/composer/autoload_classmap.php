@@ -89,6 +89,7 @@ return array(
     'App\\Http\\Controllers\\IslamicEducationController' => $baseDir . '/app/Http/Controllers/IslamicEducationController.php',
     'App\\Http\\Controllers\\LanguageController' => $baseDir . '/app/Http/Controllers/LanguageController.php',
     'App\\Http\\Controllers\\LifestyleController' => $baseDir . '/app/Http/Controllers/LifestyleController.php',
+    'App\\Http\\Controllers\\MahrGiveController' => $baseDir . '/app/Http/Controllers/MahrGiveController.php',
     'App\\Http\\Controllers\\MaritalStatusController' => $baseDir . '/app/Http/Controllers/MaritalStatusController.php',
     'App\\Http\\Controllers\\MemberBulkAddController' => $baseDir . '/app/Http/Controllers/MemberBulkAddController.php',
     'App\\Http\\Controllers\\MemberController' => $baseDir . '/app/Http/Controllers/MemberController.php',

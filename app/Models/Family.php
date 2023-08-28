@@ -14,4 +14,19 @@ class Family extends Model
     {
         return $this->belongsTo(User::class)->withTrashed();
     }
+
+    public function religion()
+    {
+        return $this->belongsTo(Religion::class)->withTrashed();
+    }
+
+    public function family_status()
+    {
+        return $this->belongsTo(FamilyStatus::class, 'family_status_id')->withTrashed();
+    }
+
+    public function family_value()
+    {
+        return $this->belongsTo(FamilyValue::class, 'family_value_id')->withTrashed();
+    }
 }

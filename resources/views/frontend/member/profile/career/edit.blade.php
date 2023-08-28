@@ -20,6 +20,12 @@
             </div>
         </div>
         <div class="form-group row">
+            <label class="col-md-3 col-form-label">{{translate('Income')}}</label>
+            <div class="col-md-9">
+                <input type="text" name="income" value="{{ $career->income }}"  placeholder="{{ translate('income') }}" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group row">
             <label class="col-md-3 col-form-label">{{translate('Start')}}</label>
             <div class="col-md-9">
                 <input type="number" name="career_start" value="{{$career->start}}" class="form-control" placeholder="{{translate('Start')}}" required>

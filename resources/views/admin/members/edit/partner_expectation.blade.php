@@ -99,7 +99,7 @@
             </div>
             <div class="col-md-6">
                 <label for="partner_caste_id">{{translate('Caste')}}</label>
-                <select class="form-control aiz-selectpicker" name="partner_caste_id" id="partner_caste_id" data-live-search="true" required>
+                <select class="form-control aiz-selectpicker" name="partner_caste_id" id="partner_caste_id" data-live-search="true">
 
                 </select>
                 @error('partner_caste_id')
@@ -109,7 +109,7 @@
 
             <div class="col-md-6">
                 <label for="partner_profession">{{translate('Profession')}}</label>
-                <input type="text" name="partner_profession" value="{{ !empty($member->partner_expectations->profession) ? $member->partner_expectations->profession : "" }}" class="form-control" placeholder="{{translate('Profession')}}" required>
+                <input type="text" name="partner_profession" value="{{ !empty($member->partner_expectations->profession) ? $member->partner_expectations->profession : "" }}" class="form-control" placeholder="{{translate('Profession')}}">
                 @error('partner_profession')
                     <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
@@ -218,6 +218,14 @@
                 <label for="pertner_education">{{translate('Education')}}</label>
                 <input type="text" name="pertner_education" value="{{ !empty($member->partner_expectations->education) ? $member->partner_expectations->education : "" }}" class="form-control" placeholder="{{translate('Education')}}" required>
                 @error('pertner_education')
+                    <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+
+            <div class="col-md-6">
+                <label for="age">Age</label>
+                <input type="number" name="age" value="{{ !empty($member->partner_expectations->age) ? $member->partner_expectations->age : "" }}" class="form-control" placeholder="Age" required>
+                @error('age')
                     <small class="form-text text-danger">{{ $message }}</small>
                 @enderror
             </div>

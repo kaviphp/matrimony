@@ -68,14 +68,14 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="py-1"><span>{{ translate('Religion') }}</span></td>
+                                                        <td class="py-1"><span>{{ translate('Religioness') }}</span></td>
                                                         <td class="py-1 fw-400">
                                                             @if (!empty($user->spiritual_backgrounds->religion_id))
                                                                 {{ $user->spiritual_backgrounds->religion->name }}
                                                             @endif
                                                         </td>
-                                                        <td class="py-1"><span>{{ translate('Caste') }}</span></td>
-                                                        <td class="py-1 fw-400">
+                                                        <td class="py-1 d-none"><span>{{ translate('Caste') }}</span></td>
+                                                        <td class="py-1 fw-400 d-none">
                                                             @if (!empty($user->spiritual_backgrounds->caste_id))
                                                                 {{ $user->spiritual_backgrounds->caste->name }}
                                                             @endif

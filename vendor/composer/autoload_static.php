@@ -858,6 +858,7 @@ class ComposerStaticInit7ec6d28e7a5b31abe58f7cc5ef9ad41a
         'App\\Http\\Controllers\\IslamicEducationController' => __DIR__ . '/../..' . '/app/Http/Controllers/IslamicEducationController.php',
         'App\\Http\\Controllers\\LanguageController' => __DIR__ . '/../..' . '/app/Http/Controllers/LanguageController.php',
         'App\\Http\\Controllers\\LifestyleController' => __DIR__ . '/../..' . '/app/Http/Controllers/LifestyleController.php',
+        'App\\Http\\Controllers\\MahrGiveController' => __DIR__ . '/../..' . '/app/Http/Controllers/MahrGiveController.php',
         'App\\Http\\Controllers\\MaritalStatusController' => __DIR__ . '/../..' . '/app/Http/Controllers/MaritalStatusController.php',
         'App\\Http\\Controllers\\MemberBulkAddController' => __DIR__ . '/../..' . '/app/Http/Controllers/MemberBulkAddController.php',
         'App\\Http\\Controllers\\MemberController' => __DIR__ . '/../..' . '/app/Http/Controllers/MemberController.php',
