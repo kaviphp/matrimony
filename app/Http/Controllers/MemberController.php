@@ -10,6 +10,7 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\Religion;
 use App\Models\Caste;
+use App\Models\FamilyStatus;
 use App\Models\SubCaste;
 use App\Models\MemberLanguage;
 use App\Models\FamilyValue;
@@ -238,11 +239,12 @@ class MemberController extends Controller
         $castes             = Caste::all();
         $sub_castes         = SubCaste::all();
         $family_values      = FamilyValue::all();
+        $family_statuses    = FamilyStatus::all();
         $marital_statuses   = MaritalStatus::all();
         $on_behalves        = OnBehalf::all();
         $languages          = MemberLanguage::all();
 
-        return view('admin.members.edit.index', compact('member','countries','states','cities','religions','castes','sub_castes','family_values','marital_statuses','on_behalves','languages'));
+        return view('admin.members.edit.index', compact('family_statuses', 'member','countries','states','cities','religions','castes','sub_castes','family_values','marital_statuses','on_behalves','languages'));
     }
 
 
@@ -558,12 +560,15 @@ class MemberController extends Controller
       $castes             = Caste::all();
       $sub_castes         = SubCaste::all();
       $family_values      = FamilyValue::all();
+      $family_statuses    = FamilyStatus::all();
       $marital_statuses   = MaritalStatus::all();
       $on_behalves        = OnBehalf::all();
       $languages          = MemberLanguage::all();
       $islamic_education  = IslamicEducation::all();
 
-      return view('frontend.member.profile.index', compact('member','countries','states','cities','religions','castes','sub_castes','family_values','marital_statuses','on_behalves','languages', 'islamic_education'));
+      return view('frontend.member.profile.index', compact(
+        'member','countries','states','cities','religions','castes','sub_castes', 'family_statuses',
+        'family_values','marital_statuses','on_behalves','languages', 'islamic_education'));
     }
 
     public function unapproved_profile_pictures(){

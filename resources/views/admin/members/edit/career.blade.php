@@ -9,8 +9,9 @@
 </div>
 <table class="table">
     <tr>
-        <th>{{translate('designation')}}</th>
-        <th>{{translate('company')}}</th>
+        <th>{{translate('Designation')}}</th>
+        <th>{{translate('Company')}}</th>
+        <th>{{translate('Income')}}</th>
         <th>{{translate('Start')}}</th>
         <th>{{translate('End')}}</th>
         <th>{{translate('Status')}}</th>
@@ -22,6 +23,7 @@
     <tr>
         <td>{{ $career->designation }}</td>
         <td>{{ $career->company }}</td>
+        <td>{{ $career->income }}</td>
         <td>{{ $career->start }}</td>
         <td>{{ $career->end }}</td>
         <td>

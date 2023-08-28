@@ -44,7 +44,7 @@ class HomeController extends Controller
             ->where('blocked', 0)
             ->where('deactivated', 0);
 
-        $featuredProfiles = User::where(['user_type' => 'member', 'isFeatured' => 1])->get();
+        $featuredProfiles = User::where('user_type', 'member')->where('isFeatured', 1);
 
         if (Auth::user() && Auth::user()->user_type == 'member') {
             $members = $members->where('id', '!=', Auth::user()->id)
@@ -63,7 +63,16 @@ class HomeController extends Controller
             if (count($ignored_by_ids) > 0) {
                 $members = $members->whereNotIn('id', $ignored_by_ids);
             }
+
+            $featuredProfiles = $featuredProfiles->where('id', '!=', Auth::user()->id)
+                ->whereIn("id", function ($query) {
+                    $query->select('user_id')
+                        ->from('members')
+                        ->where('gender', '!=', Auth::user()->member->gender);
+                });
         }
+
+        $featuredProfiles->get();
 
         $premium_members = $members;
         $new_members = $members;

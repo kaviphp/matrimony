@@ -215,6 +215,15 @@
                         <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+                <div class="col-md-4 d-none">
+                    <label for="partner_city_id">{{translate('Preferred city')}}</label>
+                    <select class="form-control aiz-selectpicker" name="partner_city_id" id="partner_city_id" data-live-search="true">
+
+                    </select>
+                    @error('partner_city_id')
+                        <small class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
             </div>
 
             <div class="form-group row">
@@ -250,6 +259,14 @@
                         @endforeach
                     </select>
                     @error('language_id')
+                        <small class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="age">Age</label>
+                    <input type="number" name="age" value="{{ !empty($member->partner_expectations->age) ? $member->partner_expectations->age : "" }}" class="form-control" placeholder="Age" required>
+                    @error('age')
                         <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>

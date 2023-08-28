@@ -14,6 +14,7 @@ class CareerController extends Controller
         $this->rules = [
             'designation'  => [ 'required','max:255'],
             'company'      => [ 'required','max:255'],
+            'income'      => [ 'required'],
             'career_start' => [ 'required','numeric'],
             'career_end'   => [ 'numeric', 'nullable'],
         ];
@@ -59,6 +60,7 @@ class CareerController extends Controller
          $career->user_id     = $request->user_id;
          $career->designation = $request->designation;
          $career->company     = $request->company;
+         $career->income     = $request->income;
          $career->start       = $request->career_start;
          $career->end         = $request->career_end;
 
@@ -117,6 +119,7 @@ class CareerController extends Controller
          $career              = Career::findOrFail($id);
          $career->designation = $request->designation;
          $career->company     = $request->company;
+         $career->income     = $request->income;
          $career->start       = $request->career_start;
          $career->end         = $request->career_end;
 

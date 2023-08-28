@@ -580,6 +580,23 @@
                       <tr>
                           <th>{{translate('Sibling')}}</th>
                           <td>{{ !empty($member->families->sibling) ? $member->families->sibling : "" }}</td>
+
+                          <th>{{translate('No.Of Brothers')}}</th>
+                          <td>{{ !empty($member->families->no_of_brothers) ? $member->families->no_of_brothers : "" }}</td>
+                      </tr>
+                      <tr>
+                          <th>{{translate('No.Of sisters')}}</th>
+                          <td>{{ !empty($member->families->no_of_sisters) ? $member->families->no_of_sisters : "" }}</td>
+
+                          <th>{{translate('Religiousness')}}</th>
+                          <td>{{ !empty($member->families->religion_id) ? $member->families?->religion?->name : "" }}</td>
+                      </tr>
+                      <tr>
+                          <th>{{translate('Family Status')}}</th>
+                          <td>{{ !empty($member->families->family_status_id) ? $member->families->family_status?->name : "" }}</td>
+
+                          <th>{{translate('Family Type')}}</th>
+                          <td>{{ !empty($member->families->family_value_id) ? $member->families->family_value?->name : "" }}</td>
                       </tr>
                   </table>
               </div>
@@ -644,8 +661,10 @@
                           <th>{{translate('Education')}}</th>
                           <td>{{ !empty($member->partner_expectations->education) ? $member->partner_expectations->education : "" }}</td>
 
-                          <th>{{translate('Profession')}}</th>
-                          <td>{{ !empty($member->partner_expectations->profession) ? $member->partner_expectations->profession : "" }}</td>
+                          <th>Age</th>
+                          <td>{{ !empty($member->partner_expectations->age) ? $member->partner_expectations->age : "" }}</td>
+                          {{--  <th>{{translate('Profession')}}</th>
+                          <td>{{ !empty($member->partner_expectations->profession) ? $member->partner_expectations->profession : "" }}</td>  --}}
                       </tr>
 
                       <tr>
