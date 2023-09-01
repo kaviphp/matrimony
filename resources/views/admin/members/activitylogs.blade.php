@@ -3,13 +3,8 @@
 <div class="aiz-titlebar mt-2 mb-4">
     <div class="row align-items-center">
         <div class="col-md-6">
-            <h1 class="h3">{{translate('Members')}}</h1>
+            <h1 class="h3">{{translate('Activity Logs')}}</h1>
         </div>
-        @can('create_member')
-            <div class="col-md-6 text-right">
-                <a href="{{route('members.create')}}" class="btn btn-circle btn-primary">{{translate('Add New Member')}}</a>
-            </div>
-        @endcan
     </div>
 </div>
 <div class="row">
@@ -17,7 +12,7 @@
         <div class="card">
             <div class="card-header row gutters-5">
   				<div class="col text-center text-md-left">
-  					<h5 class="mb-md-0 h6">{{ translate('All members') }}</h5>
+  					<h5 class="mb-md-0 h6">{{ translate('Activity Logs') }}</h5>
   				</div>
   				<div class="col-md-3">
   					<form class="" id="sort_members" action="" method="GET">
@@ -35,13 +30,10 @@
                             <th>{{translate('Image')}}</th>
                             <th>{{translate('Member Code')}}</th>
                             <th data-breakpoints="md">{{translate('Name')}}</th>
-                            <th data-breakpoints="md">{{translate('Gender')}}</th>
-                            @if(get_setting('member_approval_by_admin') == 1)
-                                <th data-breakpoints="md">{{translate('Approval Status')}}</th>
-                            @endif
-                            <th data-breakpoints="md">{{translate('Profile Reported')}}</th>
-                            <th data-breakpoints="md">{{translate('Phone Number')}}</th>
-                            <th data-breakpoints="md">{{translate('Member Status')}}</th>
+                            <th data-breakpoints="md">{{translate('Sent Request')}}</th>
+                            <th data-breakpoints="md">{{translate('Blocked User Count')}}</th>
+                            <th data-breakpoints="md">{{translate('Blocking Users Count')}}</th>
+                            <th data-breakpoints="md">{{translate('Chat Connections Count')}}</th>
                             <th class="text-right">{{translate('Options')}}</th>
                         </tr>
                     </thead>
@@ -59,17 +51,6 @@
                                 <td>{{ $member->code }}</td>
                                 <td>{{ $member->first_name.' '.$member->last_name }}</td>
                                 <td>{{ $member->member ? $member->member->gender == 1 ? translate('Male') : translate('Female') : ''}}</td>
-                                @if(get_setting('member_approval_by_admin') == 1)
-                                    <td>
-                                        @if($member->blocked == 1)
-                                            <span class="badge badge-inline badge-danger">{{translate('Blocked')}}</span>
-                                        @elseif($member->approved == 1)
-                                            <span class="badge badge-inline badge-success">{{translate('Approved')}}</span>
-                                        @else
-                                            <span class="badge badge-inline badge-pending">{{translate('Pending')}}</span>
-                                        @endif
-                                    </td>
-                                @endif
                                 <td>
                                   @if($member->reported_users->count() > 0)
                                     <a href="@can('view_reported_profile'){{ route('reported_members', $member->id) }}@endcan" class="badge badge-inline badge-danger" title="{{ translate('View Reports') }}">{{ $member->reported_users->count() }}</a>
@@ -93,53 +74,7 @@
                                                 <i class="las la-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                @can ('view_member_profile')
-                                                    <a class="dropdown-item" href="{{ route('members.show', $member->id) }}">{{translate('View')}}</a>
-                                                @endcan
-                                                @can('edit_member')
-                                                    <a class="dropdown-item" href="{{ route('members.edit', encrypt($member->id)) }}">{{translate('Edit')}}</a>
-                                                @endcan
-                                                @can ('block_member')
-                                                    @if($member->blocked == 0)
-                                                        <a class="dropdown-item" onclick="block_member({{$member->id}})" href="javascript:void(0);">{{translate('Block')}}</a>
-                                                    @elseif($member->blocked == 1)
-                                                        <a class="dropdown-item" onclick="unblock_member({{$member->id}})" href="javascript:void(0);" >{{translate('Unblock')}}</a>
-                                                    @endif
-                                                @endcan
-                                                @can ('approve_member')
-                                                    @if($member->approved == 0)
-                                                        <a class="dropdown-item" onclick="approve_member({{$member->id}})" href="javascript:void(0);" >{{translate('Approve')}}</a>
-                                                    @endif
-                                                @endcan
-                                                @can ('update_member_package')
-                                                    <a class="dropdown-item" onclick="package_info({{$member->id}})" href="javascript:void(0);" >{{translate('Package')}}</a>
-                                                @endcan
                                                 <a class="dropdown-item" href="{{ route('members.view.log', $member) }}">{{translate('View Activity Log')}}</a>
-                                                @if ($member->isFeatured)
-                                                <form action="{{ route('featured_profile.destroy', $member) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="dropdown-item" type="submit">
-                                                        Remove from Featured Profile
-                                                    </button>
-                                                </form>
-                                                @else
-                                                <form action="{{ route('featured_profile.store', $member) }}" method="post">
-                                                    @csrf
-                                                    <button class="dropdown-item" type="submit">
-                                                        Set as Featured Profile
-                                                    </button>
-                                                </form>
-                                                @endif
-                                                @can('offline_wallet_recharge_requests')
-                                                    <a class="dropdown-item" onclick="wallet_balance_update({{$member->id}},{{$member->balance}})" href="javascript:void(0);" >{{translate('Wallet Balance')}}</a>
-                                                @endcan
-                                                @can ('login_as_member')
-                                                    <a href="{{ route('members.login', encrypt($member->id)) }}" class="dropdown-item">{{translate('Log in as this Member')}}</a>
-                                                @endcan
-                                                @can ('delete_member')
-                                                    <a class="dropdown-item confirm-delete" data-href="{{route('members.destroy', $member->id)}}">{{translate('Delete')}}</a>
-                                                @endcan
                                             </div>
                                         </div>
                                     </div>

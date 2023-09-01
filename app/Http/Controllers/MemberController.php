@@ -86,7 +86,10 @@ class MemberController extends Controller
         // CoreComponentRepository::initializeCache();
 
         $sort_search  = null;
-        $members       = User::latest()->where('user_type','member')->where('membership',$id);
+        $members       = User::latest()->where('user_type','member');
+        if($id != 3) {
+            $members->where('membership',$id);
+        }
 
         if ($request->has('search') && ($request->input('search')!='')){
             $sort_search  = $request->search;

@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     // Member Manage
     Route::get('/members/{user}/view-log', 'MemberController@viewLog')->name('members.view.log');
     Route::resource('/members', 'MemberController');
+    Route::get('/members/activity/logs', 'UserActivityController@index')->name('members.activity.logs');
     Route::get('/members/member_list/{id}', 'MemberController@index')->name('members.index');
     Route::post('/members/approve', 'MemberController@approve')->name('members.approve');
     Route::post('/members/block', 'MemberController@block')->name('members.block');
