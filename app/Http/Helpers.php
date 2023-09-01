@@ -466,6 +466,7 @@ if (!function_exists('unique_code')) {
     {
         $id = User::withTrashed()->latest('id')->first()->id + 1;
         $code = get_setting('member_code_prifix') . date('Ym') . $id;
+        $code = 'MA' . $id;
         return $code;
     }
 }

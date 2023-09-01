@@ -25,6 +25,13 @@
                     <ul class="aiz-side-nav-list level-2">
                         @can('show_members')
                             <li class="aiz-side-nav-item">
+                                <a href="{{ route('members.index', 3) }}"
+                                    class="aiz-side-nav-link  {{ areActiveRoutes(['members.edit', 'members.show']) }}">
+                                    <span class="aiz-side-nav-text">{{ translate('All Members') }}</span>
+                                </a>
+                            </li>
+
+                            <li class="aiz-side-nav-item">
                                 <a href="{{ route('members.index', 1) }}"
                                     class="aiz-side-nav-link  {{ areActiveRoutes(['members.edit', 'members.show']) }}">
                                     <span class="aiz-side-nav-text">{{ translate('Free Members') }}</span>
@@ -59,6 +66,11 @@
                                 </a>
                             </li>
                         @endcan
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('members.activity.logs') }}" class="aiz-side-nav-link">
+                                <span class="aiz-side-nav-text">{{ translate('User Activity') }}</span>
+                            </a>
+                        </li>
                         @can('show_unapproved_profile_picrures')
                             <li class="aiz-side-nav-item">
                                 <a href="{{ route('unapproved_profile_pictures') }}" class="aiz-side-nav-link">
